@@ -9,7 +9,7 @@ const PlayerProfile = () => {
   const [participationCertificate, setParticipationCertificate] = useState({});
   const [meritCertificate, setMeritCertificate] = useState({});
   const [event, setEvent] = useState("all");
-  const [dobSort, setDobSort] = useState(""); // "asc" or "desc"
+  const [category, setCategory] = useState("all");
 
   const fetchPlayers = async () => {
     try {
@@ -46,18 +46,46 @@ const PlayerProfile = () => {
     }
   };
 
-  const sortedPlayers = () => {
-    // Filter by event
-    let filteredPlayers = event === "all" ? players : players.filter(player => player.eventName === event);
-
-    // Sort by DOB
-    if (dobSort === "asc") {
-      filteredPlayers.sort((a, b) => new Date(a.dob) - new Date(b.dob));
-    } else if (dobSort === "desc") {
-      filteredPlayers.sort((a, b) => new Date(b.dob) - new Date(a.dob));
+  const calculateAge = (dob) => {
+    const birthDate = new Date(dob);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
     }
+    return age;
+  };
 
-    return filteredPlayers;
+  const filterByCategory = (players) => {
+    if (category === "all") return players;
+
+    return players.filter((player) => {
+      const age = calculateAge(player.dob);
+      switch (category) {
+        case "U10":
+          return age < 10;
+        case "U12":
+          return age < 12;
+        case "U14":
+          return age < 14;
+        case "U17":
+          return age >= 14 && age <= 17;
+        case "U19":
+          return age >= 14 && age <= 19;
+        case "open":
+          return age >= 14;
+        default:
+          return true;
+      }
+    });
+  };
+
+  const sortedPlayers = () => {
+    // Filter by event and category
+    return filterByCategory(
+      event === "all" ? players : players.filter((player) => player.eventName === event)
+    );
   };
 
   return (
@@ -87,7 +115,7 @@ const PlayerProfile = () => {
                       onChange={(e) => setEvent(e.target.value)}
                       className="bg-yellow-500 text-black"
                     >
-                      <option value="all">Event</option>
+                      <option value="all">All players</option>
                       <option value="Epee">Epee</option>
                       <option value="Foil">Foil</option>
                       <option value="Sabre">Sabre</option>
@@ -95,14 +123,18 @@ const PlayerProfile = () => {
                   </th>
                   <th scope="col" className="px-6 py-3">
                     <select
-                      name="DOB"
-                      value={dobSort}
-                      onChange={(e) => setDobSort(e.target.value)}
+                      name="Category"
+                      value={category}
+                      onChange={(e) => setCategory(e.target.value)}
                       className="bg-yellow-500 text-black"
                     >
-                      <option value="">Sort by DOB</option>
-                      <option value="asc">Ascending</option>
-                      <option value="desc">Descending</option>
+                      <option value="all">Category</option>
+                      <option value="U10">U10</option>
+                      <option value="U12">U12</option>
+                      <option value="U14">U14</option>
+                      <option value="U17">U17</option>
+                      <option value="U19">U19</option>
+                      <option value="open">Open</option>
                     </select>
                   </th>
                 </tr>
