@@ -9,7 +9,7 @@ import { FaFacebookSquare } from "react-icons/fa";
 import { CiYoutube } from "react-icons/ci";
 import PlayerRegistor from './PlayerRegistor.jsx'
 import PlayerLogin from './PlayerLogin.jsx'
-import PlayerProile from './PlayerProile.jsx'
+import PlayerProfile from './PlayerProfile.jsx'
 import Tournaments from './Tournaments.jsx'
 
 
@@ -68,7 +68,7 @@ const Navbar = () => {
                 <Route path="admin" element={<Adminlogin />} />
                 <Route path='playerLogin' element={<PlayerLogin />} />
                 <Route path='playerRegistor' element={<PlayerRegistor />} />
-                <Route path='playerprofile' element={<PlayerProile />} />
+                <Route path='playerprofile' element={<PlayerProfile />} />
                 <Route path='tournaments' element={<Tournaments />} />
             </Routes>
 

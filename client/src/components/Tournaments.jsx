@@ -3,7 +3,7 @@ import React from 'react'
 const Tournaments = () => {
   return (
     <>
-      <div className='w-full pt-24 bg-[#0b0b51] h-[100vh]'>
+      <div className='w-full pt-24 bg-blue-600 h-[100vh]'>
         <h1 className='font-bold text-3xl mt-10 text-[#0b0b51] text-center'>Upcoming Tournaments</h1>
         <div class=" mt-5 flex justify-center items-center flex-col overflow-x-auto shadow-md rounded-2xl">
           <table class="w-[80%] text-sm text-left rtl:text-right text-[#0b0b51] ">
