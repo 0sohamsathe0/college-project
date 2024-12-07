@@ -82,7 +82,6 @@ const PlayerProfile = () => {
   };
 
   const sortedPlayers = () => {
-    // Filter by event and category
     return filterByCategory(
       event === "all" ? players : players.filter((player) => player.eventName === event)
     );
