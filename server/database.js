@@ -109,9 +109,10 @@ const addTournament = async (
   endDate,
   locationState,
   locationCity,
-  tlevel
+  tlevel,
+  ageCategory
 ) => {
-  const query = `insert into tournament_details(title,startingDate,endDate,locationState,locationCity,tlevel) values (?,?,?,?,?,?);`;
+  const query = `insert into tournament_details(title,startingDate,endDate,locationState,locationCity,tlevel,ageCategory) values (?,?,?,?,?,?,?);`;
   await pool.query(query, [
     title,
     startingDate,
@@ -119,6 +120,7 @@ const addTournament = async (
     locationState,
     locationCity,
     tlevel,
+    ageCategory
   ]);
 };
 

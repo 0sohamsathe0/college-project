@@ -41,17 +41,18 @@ const handleAddTournament = async(req,res)=>{
    endDate,
    locationState,
    locationCity,
-   tlevel
+   tlevel,
+   ageCategory
 } = req.body
 
 console.log(title);
 
 
-if(!title || !startingDate || !endDate || !locationState || !locationCity || !tlevel){
+if(!title || !startingDate || !endDate || !locationState || !locationCity || !tlevel || !ageCategory){
    return res.status(400).json({ message : "all fields are required"})
 }
 
-await addTournament(title,startingDate,endDate,locationState,locationCity,tlevel);
+await addTournament(title,startingDate,endDate,locationState,locationCity,tlevel,ageCategory);
 
 res.status(200).json({ message : `Tournament added successfully `,title : `${title}`})
 }
