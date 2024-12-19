@@ -8,7 +8,7 @@ const AdminProfile = () => {
   return (
     <div className="w-full min-h-screen bg-blue-600 pt-24 flex gap-5 justify-center items-center">
       
-        <div className="w-[40%] bg-white rounded-lg text-lg flex gap-3 flex-col font-bold p-3">
+        <div className="w-[40%] h-full bg-white rounded-lg text-lg flex gap-3 flex-col font-bold p-3">
           <Link to="adminProfile/tournaments">Tournaments</Link>
           <Link to="adminProfile/participationCertificate">
             Add Participation Certificate

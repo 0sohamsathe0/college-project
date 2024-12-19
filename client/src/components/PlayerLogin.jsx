@@ -9,8 +9,6 @@ const PlayerLogin = () => {
 
 
     const inputReference = useRef(null);
-    const dispatch = useDispatch();
-    const status = useSelector(checkPlayerAccountStatus);
 
 
     const [playerLogin, setPlayerLogin] = useState({
