@@ -2,8 +2,6 @@ import { React, useEffect, useRef, useState } from 'react'
 import PlayerLoginImage from "../assets/PlayerLoginImage.png"
 import Logo from "../assets/Logo.png"
 import "../App.css"
-import { useDispatch, useSelector } from 'react-redux'
-import { changePlayerAccountStatus, checkPlayerAccountStatus } from '../store/slice/playerAccount'
 
 
 

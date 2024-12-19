@@ -1,158 +1,41 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const Tournaments = () => {
+
+  const [tournamentName, setTournamentName] = useState("")
+  const [startDate, setStartDate] = useState("")
+  const [endDate, setEndDate] = useState("")
+
+
+  const addTournament = (e) => {
+    e.preventDefault()
+    console.log(tournamentName, startDate, endDate);
+    alert("New Tournament is added")
+    setTournamentName("")
+    setStartDate("")
+    setEndDate("")
+  }
+
+
   return (
     <>
-      <div className='w-full pt-24 bg-blue-600 h-[100vh]'>
-        <h1 className='font-bold text-3xl mt-10 text-[#0b0b51] text-center'>Upcoming Tournaments</h1>
-        <div class=" mt-5 flex justify-center items-center flex-col overflow-x-auto shadow-md rounded-2xl">
-          <table class="w-[80%] text-sm text-left rtl:text-right text-[#0b0b51] ">
-            <thead class="text-xs text-[#0b0b51] uppercase bg-yellow-500">
-              <tr>
-                <th scope="col" class="px-6 py-3">
-                  Tournament Name
-                </th>
-                <th scope="col" class="px-6 py-3">
-                  Starting Date
-                </th>
-                <th scope="col" class="px-6 py-3">
-                  Ending Date
-                </th>
-                <th scope="col" class="px-6 py-3">
-                  Location
-                </th>
-                <th scope="col" class="px-6 py-3">
-                  Level
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="bg-white border-b  hover:bg-gray-50 ">
-                <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap text-[#0b0b51]">
-                  International Fencing Compition nigga black compitiojn pluys pro max ultra gay
-                </th>
-
-                <td class="px-6 py-4">
-                  12-2-2022
-                </td>
-                <td class="px-6 py-4">
-                  12-2-2022
-                </td>
-                <td class="px-6 py-4">
-                  Chiplun , Konkan
-                </td>
-                <td class="px-6 py-4">
-                  International
-                </td>
-
-              </tr>
-
-              <tr class="bg-white border-b  hover:bg-gray-50 ">
-                <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap text-[#0b0b51]">
-                  International Fencing Compition nigga black compitiojn pluys pro max ultra gay
-                </th>
-
-                <td class="px-6 py-4">
-                  12-2-2022
-                </td>
-                <td class="px-6 py-4">
-                  12-2-2022
-                </td>
-                <td class="px-6 py-4">
-                  Chiplun , Konkan
-                </td>
-                <td class="px-6 py-4">
-                  International
-                </td>
-
-              </tr>
-
-              <tr class="bg-white border-b  hover:bg-gray-50 ">
-                <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap text-[#0b0b51]">
-                  International Fencing Compition nigga black compitiojn pluys pro max ultra gay
-                </th>
-
-                <td class="px-6 py-4">
-                  12-2-2022
-                </td>
-                <td class="px-6 py-4">
-                  12-2-2022
-                </td>
-                <td class="px-6 py-4">
-                  Chiplun , Konkan
-                </td>
-                <td class="px-6 py-4">
-                  International
-                </td>
-
-              </tr>
-
-              <tr class="bg-white border-b  hover:bg-gray-50 ">
-                <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap text-[#0b0b51]">
-                  International Fencing Compition nigga black compitiojn pluys pro max ultra gay
-                </th>
-
-                <td class="px-6 py-4">
-                  12-2-2022
-                </td>
-                <td class="px-6 py-4">
-                  12-2-2022
-                </td>
-                <td class="px-6 py-4">
-                  Chiplun , Konkan
-                </td>
-                <td class="px-6 py-4">
-                  International
-                </td>
-
-              </tr>
-
-              <tr class="bg-white border-b  hover:bg-gray-50 ">
-                <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap text-[#0b0b51]">
-                  International Fencing Compition nigga black compitiojn pluys pro max ultra gay
-                </th>
-
-                <td class="px-6 py-4">
-                  12-2-2022
-                </td>
-                <td class="px-6 py-4">
-                  12-2-2022
-                </td>
-                <td class="px-6 py-4">
-                  Chiplun , Konkan
-                </td>
-                <td class="px-6 py-4">
-                  International
-                </td>
-
-              </tr>
-
-              <tr class="bg-white border-b  hover:bg-gray-50 ">
-                <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap text-[#0b0b51]">
-                  International Fencing Compition nigga black compitiojn pluys pro max ultra gay
-                </th>
-
-                <td class="px-6 py-4">
-                  12-2-2022
-                </td>
-                <td class="px-6 py-4">
-                  12-2-2022
-                </td>
-                <td class="px-6 py-4">
-                  Chiplun , Konkan
-                </td>
-                <td class="px-6 py-4">
-                  International
-                </td>
-
-              </tr>
-
-
-            </tbody>
-          </table>
+      <form className='w-full bg-white rounded-md mt-3'>
+        <h1 className='w-full text-center font-bold py-4 text-xl'>Add New Tournament</h1>
+        <div className='w-full flex justify-center gap-3 items-center px-3 py-3'>
+          <label htmlFor="tournamentName" className='font-bold'>Tournament Name :</label>
+          <input type="text" name="tournamentName" value={tournamentName} onChange={(e) => setTournamentName(e.target.value)} className='w-[70%] border border-black' />
         </div>
-      </div>
+        <div className='w-full flex justify-center gap-3 items-center px-3 py-3'>
+          <label htmlFor="StartDate" className='font-bold'>Start Date :</label>
+          <input type="date" name="StartDate" value={startDate} onChange={(e) => setStartDate(e.target.value)} className='w-[70%] border border-black' />
+        </div>
+        <div className='w-full flex justify-center gap-3 items-center px-3 py-3'>
+          <label htmlFor="EndDate" className='font-bold'>End Date :</label>
+          <input type="date" name="EndDate" value={endDate} onChange={(e) => setEndDate(e.target.value)} className='w-[70%] border border-black' />
+        </div>
 
+        <button className='px-3 bg-blue-600 text-white text-center py-3 mx-5 my-3 rounded-md font-semibold' onClick={(e) => addTournament(e)}>Add Tournament</button>
+      </form>
     </>
   )
 }

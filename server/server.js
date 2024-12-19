@@ -27,7 +27,7 @@ app.get("/", (req, res) => {
 
 //using player router
 app.use('/players',playerRouter);
-console.log("hello");
+
 
 app.use('/admin',adminRouter);
 

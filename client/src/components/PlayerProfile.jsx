@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import Certificates from "./Certificates";
 
 const PlayerProfile = () => {
   const [players, setPlayers] = useState([]);
@@ -89,7 +87,7 @@ const PlayerProfile = () => {
 
   return (
     <>
-      <div className="w-full -z-50 pt-24 px-10">
+      <div className="w-full min-h-screen bg-blue-600 -z-50 pt-24 px-10">
         <div className="container">
           <h1 className="text-2xl font-bold mb-5 text-white">
             Player Request Queue
@@ -206,10 +204,7 @@ const PlayerProfile = () => {
                         </div>
                       </div>
                     </div>
-                    <Certificates
-                      meritCertificate={meritCertificate}
-                      participationCertificate={participationCertificate}
-                    />
+                    
                   </div>
                 );
               })

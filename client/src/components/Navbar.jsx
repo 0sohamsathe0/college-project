@@ -10,10 +10,7 @@ import { CiYoutube } from "react-icons/ci";
 import PlayerRegistor from './PlayerRegistor.jsx'
 import PlayerLogin from './PlayerLogin.jsx'
 import PlayerProfile from './PlayerProfile.jsx'
-import Tournaments from './Tournaments.jsx'
-
-
-
+import AdminProfile from './AdminProfile.jsx'
 
 const Navbar = () => {
     return (
@@ -35,7 +32,7 @@ const Navbar = () => {
                     <NavLink to="admin" className={({ isActive }) => `${isActive ? "border border-white rounded-md xl:rounded-3xl hover:no-underline px-3 py-2 xl:px-5 xl:py-3" : "text-white"} duration-200 ease-in-out`}>Admin Login</NavLink>
                     <NavLink to="playerLogin" className={({ isActive }) => `${isActive ? "border border-white rounded-md xl:rounded-3xl hover:no-underline px-3 py-2 xl:px-5 xl:py-3" : "text-white"} duration-200 ease-in-out`}>Player Login</NavLink>
                     <NavLink to="playerRegistor" className={({ isActive }) => `${isActive ? "border border-white rounded-md xl:rounded-3xl hover:no-underline px-3 py-2 xl:px-5 xl:py-3" : "text-white"} duration-200 ease-in-out`}>Player Registor</NavLink>
-                    <NavLink to="tournaments" className={({ isActive }) => `${isActive ? "border border-white rounded-md xl:rounded-3xl hover:no-underline px-3 py-2 xl:px-5 xl:py-3" : "text-white"} duration-200 ease-in-out`}>Tournaments</NavLink>
+                    <NavLink to="adminProfile" className={({ isActive }) => `${isActive ? "border border-white rounded-md xl:rounded-3xl hover:no-underline px-3 py-2 xl:px-5 xl:py-3" : "text-white"} duration-200 ease-in-out`}>Admin Profile</NavLink>
                     <NavLink to="playerprofile" className={({ isActive }) => `${isActive ? "border border-white rounded-md xl:rounded-3xl hover:no-underline px-3 py-2 xl:px-5 xl:py-3" : "text-white"} duration-200 ease-in-out`}>Player Profile</NavLink>
                 </div>
 
@@ -69,7 +66,7 @@ const Navbar = () => {
                 <Route path='playerLogin' element={<PlayerLogin />} />
                 <Route path='playerRegistor' element={<PlayerRegistor />} />
                 <Route path='playerprofile' element={<PlayerProfile />} />
-                <Route path='tournaments' element={<Tournaments />} />
+                <Route path='adminProfile/*' element={<AdminProfile />} />
             </Routes>
 
         </>

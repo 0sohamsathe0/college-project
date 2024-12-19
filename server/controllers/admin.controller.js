@@ -119,4 +119,18 @@ const handleEventSort = async(req,res)=>{
    res.status(200).json(result)
 }
 
+const handleAdminLogin = async(req,res)=>{
+   const {userid , password } = req.body;
+   if (!userid && !password) {
+     res.status(400).json({message : "Userid and password both are required"}) 
+   }
+
+   if(userid == "admin" && password == "123456"){
+     res.send("login successful") 
+   }
+   else{
+      res.send("wrong credentials")
+   }
+}
+
 export { handleGetRequestdPlayers , handleAcceptPlayer ,handleRejectPlayer ,handleAddTournament ,handleAddMeritCertificate ,handleAddParticipationCertificate ,handleAddIndividualResult,handleAddTeamResult , handleGetAllTournament,handleEventSort};
