@@ -3,19 +3,54 @@ import axios from 'axios'
 
 const MeritCertificate = () => {
 
-    const [certificate, setCertificate] = useState("")
-    const [playerName, setPlayerName] = useState("PlayerName")
+    
+    // const [playerName, setPlayerName] = useState("PlayerName")
     const [tournament,setTournament] = useState([])
     const [players,setPlayers] = useState([])
+    const [data, setData] = useState({ pid:1, tid:1});
+    const [photo,setPhoto]=useState("")
     
-    const addMerit = (e) => {
-        e.preventDefault();
-        console.log(playerName, certificate);
-        alert("added merit certificate")
-        setPlayerName("")
-        setCertificate("")
-    }
     
+    const handleDataChange = (e)=>{
+        const {name , value} = e.target;
+        setData((prev)=>{
+          return {
+            ...prev,
+            [name]:value
+          }
+        })
+       }
+      
+       const handlePhotoChange = (e) => {
+        const file = e.target.files[0];
+        setPhoto(file);
+        console.log(photo);
+        
+      };
+      
+        const addMerit = async(e) => {
+          const form_data = new FormData();
+          Object.keys(data).forEach((key) => {
+            form_data.append(key, data[key]);
+          });
+      
+          form_data.append("certificatePhoto", photo);
+      
+      
+            const response = await axios.post("http://localhost:3500/admin/add-certificate/participation", form_data, {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            });
+            console.log("post req is made");
+      
+            console.log(response.data);
+          e.preventDefault();
+          
+        };
+
+
+
     const fetchPlayers = async () => {
         try {
           let response = await axios.get(
@@ -44,7 +79,7 @@ const MeritCertificate = () => {
                 <h1 className='w-full text-center font-bold py-4 text-xl'>Add Merit Certificate</h1>
                 <div className="flex justify-center items-center gap-3 py-3">
                     <p className="font-bold text-md">Player Name :</p>
-                    <select className="w-[30%]" onChange={(e) => setPlayerName(e.target.value)}>
+                    <select className="w-[30%]" onChange={handleDataChange}>
                         {players.map((player)=>{
                             return (<option key={player.pid} value={player.pid}>{player.fullName}</option>)
                         })}
@@ -53,7 +88,7 @@ const MeritCertificate = () => {
                 </div>
                 <div className="flex justify-center items-center gap-3 py-3">
                 <p className="font-bold text-md">Tournament Title :</p>
-                <select className="w-[30%]">
+                <select className="w-[30%]" onChange={handleDataChange}>
                 {tournament.map((player)=>{
                             return (<option key={player.tid} value={player.tid}>{player.title}</option>)
                         })}
@@ -63,7 +98,7 @@ const MeritCertificate = () => {
                     
                     <div>
                     <p className="font-bold text-md float-left">Add Certificate :</p>
-                    <input type="file" onChange={(e) => setCertificate(e.target.value)} value={certificate}  className="inline-block"/>
+                    <input type="file" onChange={handlePhotoChange}   className="inline-block"/>
                     </div>
                     
                 <button onClick={addMerit} className="p-3 bg-blue-600 text-white font-bold rounded-md w-[30%] m-3">Add Merit Certificate</button>

@@ -3,11 +3,11 @@ import axios from "axios";
 import { use } from "react";
 
 const ParticipationCertificate = () => {
-  const [certificate, setCertificate] = useState("");
+  // const [certificate, setCertificate] = useState("");
   const [players, setPlayers] = useState([]);
   const [tournaments, setTournaments] = useState([]);
   const [data, setData] = useState({ pid:1, tid:1});
-  const [photo,setPhoto]=useState(null)
+  const [photo,setPhoto]=useState("")
 
 
  const handleDataChange = (e)=>{
@@ -23,6 +23,8 @@ const ParticipationCertificate = () => {
  const handlePhotoChange = (e) => {
   const file = e.target.files[0];
   setPhoto(file);
+  console.log(photo);
+  
 };
 
   const addMerit = async(e) => {
@@ -33,9 +35,6 @@ const ParticipationCertificate = () => {
 
     form_data.append("certificatePhoto", photo);
 
-    for (let [key, value] of form_data.entries()) {
-        console.log(`${key}: ${value}`);
-      }
 
       const response = await axios.post("http://localhost:3500/admin/add-certificate/participation", form_data, {
         headers: {
@@ -103,7 +102,7 @@ const ParticipationCertificate = () => {
           <input
             type="file"
             onChange={handlePhotoChange}
-            value={certificate}
+            // value={photo}
             className="inline-block"
             name="path"
           />
