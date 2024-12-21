@@ -1,14 +1,14 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const Tournaments = () => {
   const [formData, setFormData] = useState({
-    tid: "",
     title: "",
     locationState: "",
     locationCity: "",
-    tLevel: "",
+    tlevel: "",
     ageCategory: "",
-    StartDate: "",
+    startingDate: "",
     endDate: "",
   });
 
@@ -23,31 +23,32 @@ const Tournaments = () => {
   };
 
   const addTournament = async (e) => {
-    const form_data = new FormData();
-    Object.keys(data).forEach((key) => {
-      form_data.append(key, data[key]);
+    e.preventDefault();
+    const data = new FormData();
+    Object.keys(formData).forEach((key) => {
+      data.append(key, formData[key]);
     });
 
-    form_data.append("certificatePhoto", photo);
-
+    for (const [key, value] of data.entries()) {
+      console.log(`${key}: ${value}`);
+    }
     const response = await axios.post(
-      "http://localhost:3500/admin/add-certificate/participation",
-      form_data,
+      "http://localhost:3500/admin/add-tournament",
+      data,
       {
         headers: {
-          "Content-Type": "multipart/form-data",
+            "Content-Type": "application/json",
         },
-      }
+    }
     );
     console.log("post req is made");
 
     console.log(response.data);
-    e.preventDefault();
   };
 
   return (
     <>
-      <form className="w-full bg-white rounded-md mt-3">
+      <form className="w-full bg-white rounded-md mt-3" onSubmit={addTournament}>
         <h1 className="w-full text-center font-bold py-4 text-xl">
           Add New Tournament
         </h1>
@@ -61,6 +62,7 @@ const Tournaments = () => {
             value={formData.title}
             onChange={handleDataChange}
             className="w-[70%] border border-black"
+            required
           />
         </div>
         <div className="w-full flex justify-center gap-3 items-center px-3 py-3">
@@ -73,6 +75,7 @@ const Tournaments = () => {
             value={formData.locationState}
             onChange={handleDataChange}
             className="w-[70%] border border-black"
+            required
           />
         </div>
         <div className="w-full flex justify-center gap-3 items-center px-3 py-3">
@@ -85,6 +88,7 @@ const Tournaments = () => {
             value={formData.locationCity}
             onChange={handleDataChange}
             className="w-[70%] border border-black"
+            required
           />
         </div>
 
@@ -95,8 +99,10 @@ const Tournaments = () => {
               <p className="font-bold text-md">Tournament Level:</p>
               <select
                 className="w-[60%] border border-black rounded"
-                name="tid"
+                name="tlevel"
+                value={formData.tlevel}
                 onChange={handleDataChange}
+                required
               >
                 <option value="district">District</option>
                 <option value="state">State</option>
@@ -108,8 +114,10 @@ const Tournaments = () => {
               <p className="font-bold text-md">Age Category :</p>
               <select
                 className="w-[60%] border border-black rounded"
-                name="tid"
+                name="ageCategory"
+                value={formData.ageCategory}
                 onChange={handleDataChange}
+                required
               >
                 <option value="10">U10</option>
                 <option value="12">U12</option>
@@ -124,15 +132,16 @@ const Tournaments = () => {
           {/* Right Section */}
           <div className="w-full md:w-1/2 flex flex-col gap-3">
             <div className="flex justify-around items-center">
-              <label htmlFor="StartDate" className="font-bold">
+              <label htmlFor="startingDate" className="font-bold">
                 Start Date:
               </label>
               <input
                 type="date"
-                name="StartDate"
-                value={formData.StartDate}
+                name="startingDate"
+                value={formData.startingDate}
                 onChange={handleDataChange}
                 className="w-[60%] border border-black rounded"
+                required
               />
             </div>
             <div className="flex justify-around items-center">
@@ -145,16 +154,17 @@ const Tournaments = () => {
                 value={formData.endDate}
                 onChange={handleDataChange}
                 className="w-[60%] border border-black rounded"
+                required
               />
             </div>
           </div>
         </div>
 
-        <button
+        <input
+          type="submit"
+          value="Add Tournament"
           className="px-3 bg-blue-600 text-white text-center py-3 mx-5 my-3 rounded-md font-semibold"
-          onClick={addTournament}>
-          Add Tournament
-        </button>
+        />
       </form>
     </>
   );

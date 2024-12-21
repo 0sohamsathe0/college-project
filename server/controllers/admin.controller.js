@@ -45,8 +45,6 @@ const handleAddTournament = async(req,res)=>{
    ageCategory
 } = req.body
 
-console.log(title);
-
 
 if(!title || !startingDate || !endDate || !locationState || !locationCity || !tlevel || !ageCategory){
    return res.status(400).json({ message : "all fields are required"})
