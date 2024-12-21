@@ -1,5 +1,5 @@
 import express from 'express';
-import { handleGetRequestdPlayers , handleAcceptPlayer ,handleRejectPlayer ,handleAddTournament ,handleAddMeritCertificate ,handleAddParticipationCertificate ,handleAddIndividualResult,handleAddTeamResult,handleGetAllTournament,handleEventSort } from "../controllers/admin.controller.js"
+import { handleGetRequestdPlayers , handleAcceptPlayer ,handleRejectPlayer ,handleAddTournament ,handleAddMeritCertificate ,handleAddParticipationCertificate ,handleAddIndividualResult,handleAddTeamResult,handleGetAllTournament,handleEventSort,handleCreateEntry } from "../controllers/admin.controller.js"
 import { upload } from "../middlewares/multer.middelware.js";
 
 const router = express.Router()
@@ -30,5 +30,6 @@ router.get("/eventWiseSort",handleEventSort);
 router.post("/add-result/individual" ,handleAddIndividualResult)
 router.post("/add-result/Team" , handleAddTeamResult)
 
+router.post("/createEntry" ,handleCreateEntry);
 
 export default router;

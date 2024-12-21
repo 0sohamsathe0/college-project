@@ -139,6 +139,14 @@ const getSpecificTournament = async (tid) => {
 }
 
 
+
+//tournament entry related functions
+const createEntry = async (pid, tid,tevent) => {
+  const query = `insert into tournament_entry(pid,tid,tevent) values (?,?,?);`;
+  await pool.query(query, [pid, tid,tevent]);
+};
+
+
 //Add certificate
 const addPartiCerti = async (tid , pid ,url) => {
   const query = "insert into certificate_of_participation (tid,pid,certficateUrl) values (?,?,?)"
@@ -179,5 +187,6 @@ export {
   addPartiCerti,
   addMeritCerti,
   getAllTournaments,
-  getSpecificTournament,sortbyevent
+  getSpecificTournament,sortbyevent,
+  createEntry
 };

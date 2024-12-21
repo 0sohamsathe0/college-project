@@ -1,4 +1,4 @@
-import { getPendingPlayers , acceptPlayer , rejectPlayer , addTournament, addPartiCerti , addMeritCerti ,getAllTournaments , sortbyevent} from "../database.js";
+import { getPendingPlayers , acceptPlayer , rejectPlayer , addTournament, addPartiCerti , addMeritCerti ,getAllTournaments , sortbyevent , createEntry} from "../database.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 
@@ -118,6 +118,17 @@ const handleEventSort = async(req,res)=>{
    res.status(200).json(result)
 }
 
+const handleCreateEntry = async(req,res)=>{
+   const {tid , pid , tevent} = req.body;
+   if(!tid || !pid || !tevent){
+      return res.status(400).json({ message : "all fields are required"})
+   }
+
+   await createEntry(tid,pid,tevent);
+
+   res.status(200).json({ message : "Entry created successfully " })
+}
+
 const handleAdminLogin = async(req,res)=>{
    const {userid , password } = req.body;
    if (!userid && !password) {
@@ -132,4 +143,4 @@ const handleAdminLogin = async(req,res)=>{
    }
 }
 
-export { handleGetRequestdPlayers , handleAcceptPlayer ,handleRejectPlayer ,handleAddTournament ,handleAddMeritCertificate ,handleAddParticipationCertificate ,handleAddIndividualResult,handleAddTeamResult , handleGetAllTournament,handleEventSort};
+export { handleGetRequestdPlayers , handleAcceptPlayer ,handleRejectPlayer ,handleAddTournament ,handleAddMeritCertificate ,handleAddParticipationCertificate ,handleAddIndividualResult,handleAddTeamResult , handleGetAllTournament,handleEventSort , handleCreateEntry};
