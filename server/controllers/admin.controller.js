@@ -4,6 +4,17 @@ import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 const handleGetRequestdPlayers = async (req, res) => {
   const requestedPlayers = await getPendingPlayers();
+
+  const formatDate = (isoDate) => {
+   const date = new Date(isoDate);
+   return((date.getDate()+"/" + (date.getMonth()+1) +"/"+ date.getFullYear() ).toString());
+ };
+ 
+ // Update the dob property directly in the original array
+ requestedPlayers.forEach((item) => {
+   item.dob = formatDate(item.dob);
+ });
+
   if (!requestedPlayers) {
     return res.json({ message: "No Pending Players present" });
   }
