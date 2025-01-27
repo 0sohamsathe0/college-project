@@ -1,5 +1,15 @@
 import{ getPlayers, getSinglePlayer, insertplayer ,pool ,getSpecificTournament} from"../database.js"
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+
+
+dotenv.config({
+  path:'./.env'
+})
+
+console.log(process.env.JWT_SECRET);
+
 
 
 //get player
@@ -101,14 +111,39 @@ async function registerPlayer(req , res) {
 
 //login 
 async function handleLogin(req,res) {
-  const { aadharCardNumber ,dob } = req.body;   
+  const { aadharCardNumber ,dob } = req.body;
+  console.log(aadharCardNumber,dob);
+  
+  if (!aadharCardNumber || !dob) {
+    return res.status(400).json({message : "All fields are required"});
+  }
+     
   const [rows] = await pool.query(`select * from player_details where aadharCardNumber=${aadharCardNumber} and dob = "${dob}";`);
   const player = rows[0];  
   if (!player) {
-    res.status(400).json({message : "player not found"})
+   return res.status(400).json({message : "player not found"})
   }
+  const token = jwt.sign({id:player.pid},process.env.JWT_SECRET);
+  res.status(200).json({token});  
   
-  res.send(player);
+}
+
+async function handleVerifyPlayer(req,res) {
+  const auth = req.headers.authorization || req.headers.Authorization;
+  const token = auth.split(" ")[1];
+  console.log(token);
+  
+  jwt.verify(token,process.env.JWT_SECRET, async(err,decoded) => {
+    if(err){
+      return res.status(400).json({message:"Invalid token"})
+    }
+    console.log(decoded);
+
+    const player = await getSinglePlayer(decoded.id);
+    console.log(player);
+    
+    res.status(200).json({message:"Player verified successfully" ,player})
+  })
 }
 
 
@@ -173,4 +208,4 @@ async function handleGeMeritCerti(req,res) {
 
 
 
-export { getAllPlayers, getPlayerDetail , registerPlayer ,handleGetPartiCerti ,handleGeMeritCerti , handleLogin}
+export { getAllPlayers, getPlayerDetail , registerPlayer ,handleGetPartiCerti ,handleGeMeritCerti , handleLogin, handleVerifyPlayer}

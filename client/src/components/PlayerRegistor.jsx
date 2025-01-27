@@ -76,7 +76,7 @@ const PlayerRegister = () => {
   };
 
   return (
-    <div className="bg-blue-600 min-h-screen py-24 px-5 flex justify-center items-center">
+    <div className="bg-blue-700 min-h-screen  px-5 flex justify-center items-center">
       <form
         onSubmit={handleSubmit}
         encType="multipart/form-data"
