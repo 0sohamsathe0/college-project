@@ -37,13 +37,13 @@ const PlayerRequestQueue = () => {
             {requests.length > 0 ? (
               requests.map((request, index) => (
                 <tr key={request.pid}>
-                  <td className="border text-white border-gray-300 px-4 py-2">{index + 1}</td>
-                  <td className="border text-white border-gray-300 px-4 py-2">{request.fullName}</td>
-                  <td className="border text-white border-gray-300 px-4 py-2">{request.aadharCardNumber}</td>
-                  <td className="border text-white border-gray-300 px-4 py-2">{request.dob}</td>
-                  <td className="border text-white border-gray-300 px-4 py-2">{request.eventName}</td>
-                  <td className="border text-white border-gray-300 px-4 py-2"><button className='bg-green-600 text-white rounded-md  p-2'>Accept</button></td>
-                  <td className="border text-white border-gray-300 px-4 py-2"><button className='bg-red-600 text-white rounded-md  p-2'>Reject</button></td>
+                  <td className="border text-black border-gray-300 px-4 py-2">{index + 1}</td>
+                  <td className="border text-black border-gray-300 px-4 py-2">{request.fullName}</td>
+                  <td className="border text-black border-gray-300 px-4 py-2">{request.aadharCardNumber}</td>
+                  <td className="border text-black border-gray-300 px-4 py-2">{request.dob}</td>
+                  <td className="border text-black border-gray-300 px-4 py-2">{request.eventName}</td>
+                  <td className="border text-black border-gray-300 px-4 py-2"><button className='bg-green-600 text-white rounded-md  p-2'>Accept</button></td>
+                  <td className="border text-black border-gray-300 px-4 py-2"><button className='bg-red-600 text-white rounded-md  p-2'>Reject</button></td>
                 </tr>
               ))
             ) : (

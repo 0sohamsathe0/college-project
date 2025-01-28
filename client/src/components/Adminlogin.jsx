@@ -13,7 +13,7 @@ const Adminlogin = () => {
     const logAdmin = () => {
 
         if(adminId === "admin" && password === "admin@123" ){
-            document.cookie = 
+            document.cookie = 'loginState=adminLoggedIn'
             alert("Login Successful")
             navigate("/adminProfile")
         }
@@ -32,7 +32,7 @@ const Adminlogin = () => {
 
     return (
         <>
-            <div className='w-full h-[86.3vh] bg-blue-700 px-28 flex justify-center items-center'>
+            <div className='w-full h-[89vh] bg-blue-700 px-28 flex justify-center items-center'>
                 <form method='POST' className='w-[80%] bg-white rounded-2xl gap-5  flex justify-between items-center'>
                     <div className="w-1/2 h-[100%] ">
                         <img src={AdminBg} alt="Admin Login image" className='w-[100%] h-[100%] bg-cover bg-center' />

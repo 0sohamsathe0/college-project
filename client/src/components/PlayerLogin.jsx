@@ -58,7 +58,7 @@ const PlayerLogin = () => {
 
   return (
     <>
-      <div className="bg-blue-700 h-[86.3vh] px-[100px] flex justify-center items-center">
+      <div className="bg-blue-700 h-[89vh] px-[100px] flex justify-center items-center">
         <form
           method="post"
           className=" bg-white w-[80%] flex justify-between items-center pt-4 px-10 rounded-3xl text-white"

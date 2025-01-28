@@ -76,193 +76,210 @@ const PlayerRegister = () => {
   };
 
   return (
-    <div className="bg-blue-700 min-h-screen  px-5 flex justify-center items-center">
+     <div className="bg-gradient-to-b from-blue-700 to-blue-500 min-h-screen px-5 flex justify-center items-center">
       <form
         onSubmit={handleSubmit}
         encType="multipart/form-data"
-        className="w-[80%] border mt-3 px-10 bg-white rounded-xl"
+        className="w-full max-w-4xl border bg-white shadow-lg rounded-xl p-8"
       >
-      <h2 className="w-full text-center justify-center items-center text-[2rem] my-3 text-black">Register Player</h2>
+        <h2 className="text-3xl font-bold text-center text-blue-700 mb-6">
+          Register Player
+        </h2>
 
-
-          <h1 className="w-full bg-blue-600 py-3 rounded-t-xl rounded-tr-xl text-center text-white font-bold text-xl">Player Details</h1>
-        
-
-        <div className="w-full flex justify-start items-center mt-2">
-        <div className="flex w-[40%] justify-start gap-2 text-center items-center">
-          <label className="w-auto">Full Name:</label>
-          <input
-            type="text"
-            name="fullName"
-            value={formData.fullName}
-            onChange={handleChange}
-            required
-            className="border w-[60%] border-black"
-          />
-        </div>
-          <div className="flex w-[20%] justify-center gap-2 text-center items-center">
-            <label className="w-auto">Gender:</label>
-            <select
-              name="gender"
-              value={formData.gender}
-              onChange={handleChange}
-              required
-              className="border w-[60%] border-black"
-            >
-              <option value="">Select Gender</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-            </select>
+        <section>
+          <h3 className="bg-blue-600 text-white text-lg font-semibold py-2 px-4 rounded-t-lg">
+            Player Details
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+            <div>
+              <label className="block font-medium mb-2">Full Name</label>
+              <input
+                type="text"
+                name="fullName"
+                value={formData.fullName}
+                onChange={handleChange}
+                required
+                className="w-full border rounded-lg px-3 py-2"
+              />
+            </div>
+            <div>
+              <label className="block font-medium mb-2">Gender</label>
+              <select
+                name="gender"
+                value={formData.gender}
+                onChange={handleChange}
+                required
+                className="w-full border rounded-lg px-3 py-2"
+              >
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>
+            <div>
+              <label className="block font-medium mb-2">Date of Birth</label>
+              <input
+                type="date"
+                name="dob"
+                value={formData.dob}
+                onChange={handleChange}
+                required
+                className="w-full border rounded-lg px-3 py-2"
+              />
+            </div>
+            <div>
+              <label className="block font-medium mb-2">Event Name</label>
+              <select
+                name="eventName"
+                value={formData.eventName}
+                onChange={handleChange}
+                required
+                className="w-full border rounded-lg px-3 py-2"
+              >
+                <option value="">Select Event</option>
+                <option value="Epee">Epee</option>
+                <option value="Foil">Foil</option>
+                <option value="Sabre">Sabre</option>
+              </select>
+            </div>
           </div>
-          <div className="flex w-[20%] justify-center gap-2 text-center items-center">
-            <label className="w-auto">Date of Birth:</label>
-            <input
-              className="border w-[60%] border-black"
-              type="date"
-              name="dob"
-              value={formData.dob}
-              onChange={handleChange}
-              required
-            />
+        </section>
+
+        <section className="mt-6">
+          <h3 className="bg-blue-600 text-white text-lg font-semibold py-2 px-4 rounded-t-lg">
+            Contact Details
+          </h3>
+          <div className="grid grid-cols-1 gap-4 mt-4">
+            <div>
+              <label className="block font-medium mb-2">Aadhar Card Number</label>
+              <input
+                type="text"
+                name="aadharCardNumber"
+                value={formData.aadharCardNumber}
+                onChange={handleChange}
+                required
+                maxLength="12"
+                pattern="\d{12}"
+                className="w-full border rounded-lg px-3 py-2"
+              />
+            </div>
+            <div>
+              <label className="block font-medium mb-2">Email</label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                className="w-full border rounded-lg px-3 py-2"
+              />
+            </div>
+            <div>
+              <label className="block font-medium mb-2">Phone</label>
+              <input
+                type="text"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                required
+                maxLength="10"
+                pattern="\d{10}"
+                className="w-full border rounded-lg px-3 py-2"
+              />
+            </div>
           </div>
-          <div className="flex w-[20%] justify-center gap-2 text-center items-center">
-            <label className="w-auto">Event Name:</label>
-            <select
-              className="border w-[60%] border-black"
-              name="eventName"
-              value={formData.eventName}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Select Event</option>
-              <option value="Epee">Epee</option>
-              <option value="Foil">Foil</option>
-              <option value="Sabre">Sabre</option>
-            </select>
+        </section>
+
+        <section className="mt-6">
+          <h3 className="bg-blue-600 text-white text-lg font-semibold py-2 px-4 rounded-t-lg">
+            Address Details
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+            <div>
+              <label className="block font-medium mb-2">Address Line 1</label>
+              <input
+                type="text"
+                name="addressLine1"
+                value={formData.addressLine1}
+                onChange={handleChange}
+                required
+                className="w-full border rounded-lg px-3 py-2"
+              />
+            </div>
+            <div>
+              <label className="block font-medium mb-2">Address Line 2</label>
+              <input
+                type="text"
+                name="addressLine2"
+                value={formData.addressLine2}
+                onChange={handleChange}
+                required
+                className="w-full border rounded-lg px-3 py-2"
+              />
+            </div>
+            <div>
+              <label className="block font-medium mb-2">Pincode</label>
+              <input
+                type="text"
+                name="pincode"
+                value={formData.pincode}
+                onChange={handleChange}
+                required
+                maxLength="6"
+                pattern="\d{6}"
+                className="w-full border rounded-lg px-3 py-2"
+              />
+            </div>
+            <div>
+              <label className="block font-medium mb-2">School/College Name</label>
+              <input
+                type="text"
+                name="schoolCollegeName"
+                value={formData.schoolCollegeName}
+                onChange={handleChange}
+                required
+                className="w-full border rounded-lg px-3 py-2"
+              />
+            </div>
           </div>
-        </div>
+        </section>
 
-        <h1 className="w-full bg-blue-600 py-3 mt-5 rounded-t-xl rounded-tr-xl text-center text-white font-bold text-xl">Contact Details</h1>
-
-
-        <div className="w-full flex flex-col mt-2">
-          <div className="flex w-full justify-center gap-5 mt-2 items-center ">
-            <label className="w-auto">Aadhar Card Number:</label>
-            <input
-              type="text"
-              name="aadharCardNumber"
-              value={formData.aadharCardNumber}
-              onChange={handleChange}
-              required
-              className="border w-[60%] border-black"
-            />
+        <section className="mt-6">
+          <h3 className="bg-blue-600 text-white text-lg font-semibold py-2 px-4 rounded-t-lg">
+            Uploads
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+            <div>
+              <label className="block font-medium mb-2">Photo</label>
+              <input
+                type="file"
+                name="photo"
+                onChange={handlePhotoChange}
+                required
+                className="w-full border rounded-lg px-3 py-2"
+              />
+            </div>
+            <div>
+              <label className="block font-medium mb-2">Aadhar Card Photo</label>
+              <input
+                type="file"
+                name="aadharCardPhoto"
+                onChange={handleAadharCardPhotoChange}
+                required
+                className="w-full border rounded-lg px-3 py-2"
+              />
+            </div>
           </div>
-          <div className="flex w-full justify-center gap-5 mt-2 items-center">
-            <label className="w-auto">Email:</label>
-            <input
-              className="border w-[60%] border-black"
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="flex w-full justify-center gap-5 mt-2 items-center">
-            <label className="w-auto">Phone:</label>
-            <input
-              className="border w-[60%] border-black"
-              type="text"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          
+        </section>
+
+        <div className="text-center mt-6">
+          <button
+            type="submit"
+            className="py-3 px-6 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition"
+          >
+            Register Player
+          </button>
         </div>
-
-
-
-        <h1 className="w-full bg-blue-600 py-3 mt-5 rounded-t-xl rounded-tr-xl text-center text-white font-bold text-xl">Address Details</h1>
-
-        
-        <div className="w-full flex justify-start items-center mt-2">
-          <div className="flex w-[50%] justify-between text-center items-center">
-            <label className="w-auto px-5">Address Line 1:</label>
-            <input
-              className="border w-[70%] border-black"
-              type="text"
-              name="addressLine1"
-              value={formData.addressLine1}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="flex w-[50%] justify-between text-center items-center">
-            <label className="w-auto px-5">Address Line 2:</label>
-            <input
-              className="border w-[70%] border-black"
-              type="text"
-              name="addressLine2"
-              value={formData.addressLine2}
-              onChange={handleChange}
-              required
-            />
-          </div>
-        </div>
-
-       <div className="w-full flex justify-start items-center mt-2">
-       <div className="flex w-[50%] justify-between text-center items-center">
-          <label className="w-auto px-5">Pincode:</label>
-          <input className="border w-[70%] border-black"
-            type="text"
-            name="pincode"
-            value={formData.pincode}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="flex w-[50%] justify-start items-center">
-          <label className="w-auto px-5">School/College Name:</label>
-          <input className="border w-full border-black"
-            type="text"
-            name="schoolCollegeName"
-            value={formData.schoolCollegeName}
-            onChange={handleChange}
-            required
-          />
-        </div>
-       </div>
-
-       <div  className="w-full flex justify-start items-center mt-2">
-        <div className="flex w-[50%] justify-between text-center items-center">
-          <label className="w-auto px-5">Photo:</label>
-          <input className="w-auto "
-            type="file"
-            name="photo"
-            onChange={handlePhotoChange}
-            required
-          />
-        </div>
-        <div className="flex w-[50%] justify-between text-center items-center">
-          <label className="w-auto px-5">Aadhar Card Photo:</label>
-          <input className="w-auto "
-            type="file"
-            name="aadharCardPhoto"
-            onChange={handleAadharCardPhotoChange}
-            required
-          />
-        </div>
-        </div>
-
-       
-       <div className="w-full text-center my-3">
-       <button type="submit" className="py-3 px-5 rounded-lg bg-blue-600 text-white font-bold">Register Player</button>
-       </div>
-
-
-        
       </form>
     </div>
   );
