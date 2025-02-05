@@ -6,7 +6,7 @@ const Tournaments = () => {
     title: "",
     locationState: "",
     locationCity: "",
-    tlevel: "",
+    tlevel: "National",
     ageCategory: "",
     startingDate: "",
     endDate: "",
@@ -100,14 +100,14 @@ const Tournaments = () => {
               <select
                 className="w-[60%] border border-black rounded"
                 name="tlevel"
-                value={formData.tlevel}
+                value={formData.tlevel }
                 onChange={handleDataChange}
                 required
               >
-                <option value="district">District</option>
-                <option value="state">State</option>
-                <option value="national">National</option>
-                <option value="international">International</option>
+                <option value="District" >District</option>
+                <option value="State">State</option>
+                <option value="National" >National</option>
+                <option value="International">International</option>
               </select>
             </div>
             <div className="flex justify-around items-center">
@@ -164,6 +164,7 @@ const Tournaments = () => {
           type="submit"
           value="Add Tournament"
           className="px-3 bg-blue-600 text-white text-center py-3 mx-5 my-3 rounded-md font-semibold"
+          onClick={addTournament}
         />
       </form>
     </>

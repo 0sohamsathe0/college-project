@@ -6,10 +6,10 @@ import MeritCertificate from "./MeritCertificate.jsx";
 import PlayerRequestQueue from "./PlayerRequestQueue.jsx";
 import { useState,useEffect } from "react";
 import axios from "axios";
+import CreateEntry from "./CreateEntry.jsx";
+import Entry from "./Entry.jsx";
 
 const AdminProfile = () => {
-
-  
     const [event, setEvent] = useState("all");
     const [category, setCategory] = useState("all");
     const [players, setPlayers] = useState([]);
@@ -63,7 +63,9 @@ const AdminProfile = () => {
     };
   
     const calculateAge = (dob) => {
-      const birthDate = new Date(dob);
+      const [day, month, year] = dob.split('/').map(Number);
+      const birthDate = new Date(year, month - 1, day);
+      
       const today = new Date();
       let age = today.getFullYear() - birthDate.getFullYear();
       const monthDiff = today.getMonth() - birthDate.getMonth();
@@ -229,7 +231,12 @@ const AdminProfile = () => {
                 )}
               </tbody>
             </table>
+
           </div>
+          <CreateEntry/>
+          <br />
+          <br />
+          <Entry/>
         </main>
       </div>
     </div>
