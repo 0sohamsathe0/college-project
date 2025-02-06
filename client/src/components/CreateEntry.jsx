@@ -47,7 +47,7 @@ const CreateEntry = () => {
     setEpeePlayers(filterByGender("Epee", gender));
     setFoilPlayers(filterByGender("Foil", gender));
     setSabrePlayers(filterByGender("Sabre", gender));
-  }, [playerList, gender]);
+  }, [playerList, gender,setGender]);
 
  
   useEffect(() => {
@@ -112,15 +112,13 @@ const CreateEntry = () => {
     console.log(ageCategory);
     let players = playerList;
     players.map((player) => {
-        
-        player.age = calculateAge(player.dob);
-        console.log({ name : player.fullName ,age : player.age , dob : player.dob});
-        
+        player.age = calculateAge(player.dob);   
     })
 
-    console.log(players);
-    
-     
+
+    const sortedPlayers = players.filter(player => player.age <= ageCategory);
+    console.log(sortedPlayers);
+    setPlayerList(sortedPlayers);
   }
 
 
