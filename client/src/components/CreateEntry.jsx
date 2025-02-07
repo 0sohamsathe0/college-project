@@ -13,6 +13,14 @@ const CreateEntry = () => {
   const [selectTournament, setSelectTournament] = useState();
   const [tournamentList, setTournamentList] = useState([]);
   const [playerList, setPlayerList] = useState([]);
+  const [allSortedPlayers, setAllSortedPlayers] = useState([]);
+
+  
+  console.log(playerNameArray);
+  
+ 
+  console.log(playerList);
+  
 
   const handleGenderChange = (e) => {
     setGender(e.target.value);
@@ -34,20 +42,41 @@ const CreateEntry = () => {
       console.error("Error fetching data:", error);
     }
   };
+  console.log(tournamentList);
 
   
   useEffect(() => {
-    if (playerList.length === 0) return; 
+    if (!selectTournament || playerList.length === 0) return;
+    const selectedTournamentObj = tournamentList.find(t => t.tid === Number(selectTournament));
+    if (!selectedTournamentObj) return;
+    
+    const ageCategory = selectedTournamentObj.ageCategory;
+  
 
-    const filterByGender = (eventName, genderValue) =>
-      playerList.filter(
-        (player) => player.eventName === eventName && player.gender === genderValue
-      );
+    const calculateAge = (dob) => {
+      const [day, month, year] = dob.split('/').map(Number);
+      const birthDate = new Date(year, month - 1, day);
+      const today = new Date();
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+      return age;
+    };
+    const filteredPlayers = playerList
+      .map(player => ({
+        ...player,
+        age: calculateAge(player.dob)  
+      }))
+      .filter(player => player.gender === gender && player.age <= ageCategory);
+    setEpeePlayers(filteredPlayers.filter(player => player.eventName === "Epee"));
+    setFoilPlayers(filteredPlayers.filter(player => player.eventName === "Foil"));
+    setSabrePlayers(filteredPlayers.filter(player => player.eventName === "Sabre"));
+  
+  }, [playerList, gender, selectTournament, tournamentList]);
+  
 
-    setEpeePlayers(filterByGender("Epee", gender));
-    setFoilPlayers(filterByGender("Foil", gender));
-    setSabrePlayers(filterByGender("Sabre", gender));
-  }, [playerList, gender,setGender]);
 
  
   useEffect(() => {
@@ -56,45 +85,49 @@ const CreateEntry = () => {
 
   const handlePlayerChange = (name) => {
     setPlayerNameArray((prev) => [...prev, name]);
-    console.log(playerNameArray);
   };
 
   const epeePlayerArray = () => {
     return epeePlayers
       .filter((player) => playerNameArray.includes(player.fullName))
-      .map((player) => player.pid);
-    
+      .map((player) => player.pid);  
 };
+
+
+
+ 
+
   const foilPlayerArray = () => {
     
     return foilPlayers
       .filter((player) => playerNameArray.includes(player.fullName))
       .map((player) => player.pid);
   };
+  console.log(foilPlayers);
+
+
+
   const sabrePlayerArray = () => {
     
     return sabrePlayers
       .filter((player) => playerNameArray.includes(player.fullName))
       .map((player) => player.pid);
-  };
+  }
+  console.log(sabrePlayers);
+
 
   const chooseTournament = (e) => {
     const pid = Number(e.target.value)
-
     const selectedTournament = tournamentList.find(tournament => tournament.tid === pid);
     const ageCategory = selectedTournament.ageCategory;
-    
-    console.log(selectedTournament);
-
-
     setSelectTournament(e.target.value);
     
-    
-    filterPlayerByTournament(ageCategory);
   };
+  console.log(selectTournament);
+
   
 
-  const filterPlayerByTournament = (ageCategory) =>
+  {/*const filterPlayerByTournament = (ageCategory) =>
   {
     const calculateAge = (dob) => {
         const [day, month, year] = dob.split('/').map(Number);
@@ -114,12 +147,14 @@ const CreateEntry = () => {
     players.map((player) => {
         player.age = calculateAge(player.dob);   
     })
+    console.log(players);
 
 
     const sortedPlayers = players.filter(player => player.age <= ageCategory);
-    console.log(sortedPlayers);
-    setPlayerList(sortedPlayers);
+    setAllSortedPlayers(sortedPlayers);
   }
+  console.log(allSortedPlayers);*/}
+  
 
 
   const exportPlayers = async (e) => {
@@ -150,6 +185,7 @@ const CreateEntry = () => {
               onChange={chooseTournament}
               value={selectTournament}
             >
+              <option value="Choose Tournament">Choose Tournament</option>
               {tournamentList &&
                 tournamentList.map((tournament) => {
                   return (
