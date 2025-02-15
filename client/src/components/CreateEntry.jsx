@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import ExcelJS from "exceljs";
+import { saveAs } from "file-saver";
 
 //googlesheet url
 // https://script.google.com/macros/s/AKfycbyr_fd3NtVlNQ6W7q-jsq01hwGBjyv4KSvHpJN5Mab-zLbwFW4elO1P1yJi67P6Gka6/exec
@@ -15,12 +17,9 @@ const CreateEntry = () => {
   const [playerList, setPlayerList] = useState([]);
   const [allSortedPlayers, setAllSortedPlayers] = useState([]);
 
-  
   console.log(playerNameArray);
-  
- 
+
   console.log(playerList);
-  
 
   const handleGenderChange = (e) => {
     setGender(e.target.value);
@@ -34,9 +33,7 @@ const CreateEntry = () => {
       );
       setTournamentList(response.data);
 
-      response = await axios.get(
-        "http://localhost:3500/players/all-players"
-      );
+      response = await axios.get("http://localhost:3500/players/all-players");
       setPlayerList(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -44,41 +41,48 @@ const CreateEntry = () => {
   };
   console.log(tournamentList);
 
-  
   useEffect(() => {
     if (!selectTournament || playerList.length === 0) return;
-    const selectedTournamentObj = tournamentList.find(t => t.tid === Number(selectTournament));
+    const selectedTournamentObj = tournamentList.find(
+      (t) => t.tid === Number(selectTournament)
+    );
     if (!selectedTournamentObj) return;
-    
+
     const ageCategory = selectedTournamentObj.ageCategory;
-  
 
     const calculateAge = (dob) => {
-      const [day, month, year] = dob.split('/').map(Number);
+      const [day, month, year] = dob.split("/").map(Number);
       const birthDate = new Date(year, month - 1, day);
       const today = new Date();
       let age = today.getFullYear() - birthDate.getFullYear();
       const monthDiff = today.getMonth() - birthDate.getMonth();
-      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      if (
+        monthDiff < 0 ||
+        (monthDiff === 0 && today.getDate() < birthDate.getDate())
+      ) {
         age--;
       }
       return age;
     };
     const filteredPlayers = playerList
-      .map(player => ({
+      .map((player) => ({
         ...player,
-        age: calculateAge(player.dob)  
+        age: calculateAge(player.dob),
       }))
-      .filter(player => player.gender === gender && player.age <= ageCategory);
-    setEpeePlayers(filteredPlayers.filter(player => player.eventName === "Epee"));
-    setFoilPlayers(filteredPlayers.filter(player => player.eventName === "Foil"));
-    setSabrePlayers(filteredPlayers.filter(player => player.eventName === "Sabre"));
-  
+      .filter(
+        (player) => player.gender === gender && player.age <= ageCategory
+      );
+    setEpeePlayers(
+      filteredPlayers.filter((player) => player.eventName === "Epee")
+    );
+    setFoilPlayers(
+      filteredPlayers.filter((player) => player.eventName === "Foil")
+    );
+    setSabrePlayers(
+      filteredPlayers.filter((player) => player.eventName === "Sabre")
+    );
   }, [playerList, gender, selectTournament, tournamentList]);
-  
 
-
- 
   useEffect(() => {
     fetchData();
   }, []);
@@ -90,72 +94,27 @@ const CreateEntry = () => {
   const epeePlayerArray = () => {
     return epeePlayers
       .filter((player) => playerNameArray.includes(player.fullName))
-      .map((player) => player.pid);  
-};
-
-
-
- 
+      .map((player) => player);
+  };
 
   const foilPlayerArray = () => {
-    
     return foilPlayers
       .filter((player) => playerNameArray.includes(player.fullName))
-      .map((player) => player.pid);
+      .map((player) => player);
   };
   console.log(foilPlayers);
 
-
-
   const sabrePlayerArray = () => {
-    
     return sabrePlayers
       .filter((player) => playerNameArray.includes(player.fullName))
-      .map((player) => player.pid);
-  }
+      .map((player) => player);
+  };
   console.log(sabrePlayers);
 
-
   const chooseTournament = (e) => {
-    const pid = Number(e.target.value)
-    const selectedTournament = tournamentList.find(tournament => tournament.tid === pid);
-    const ageCategory = selectedTournament.ageCategory;
     setSelectTournament(e.target.value);
-    
   };
   console.log(selectTournament);
-
-  
-
-  {/*const filterPlayerByTournament = (ageCategory) =>
-  {
-    const calculateAge = (dob) => {
-        const [day, month, year] = dob.split('/').map(Number);
-        const birthDate = new Date(year, month - 1, day);
-        
-        const today = new Date();
-        let age = today.getFullYear() - birthDate.getFullYear();
-        const monthDiff = today.getMonth() - birthDate.getMonth();
-        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-          age--;
-        }
-        return age;
-      };
-
-    console.log(ageCategory);
-    let players = playerList;
-    players.map((player) => {
-        player.age = calculateAge(player.dob);   
-    })
-    console.log(players);
-
-
-    const sortedPlayers = players.filter(player => player.age <= ageCategory);
-    setAllSortedPlayers(sortedPlayers);
-  }
-  console.log(allSortedPlayers);*/}
-  
-
 
   const exportPlayers = async (e) => {
     e.preventDefault();
@@ -166,8 +125,86 @@ const CreateEntry = () => {
       foilPlayers: foilPlayerArray(),
       sabrePlayers: sabrePlayerArray(),
     };
-    console.log(dataToExport);
+  
+    let playersArray = [
+      ...dataToExport.epeePlayers,
+      ...dataToExport.foilPlayers,
+      ...dataToExport.sabrePlayers,
+    ];
+  
+    try {
+      const workbook = new ExcelJS.Workbook();
+      const worksheet = workbook.addWorksheet(`Player Entries`);
+  
+      // Title Row
+      worksheet.mergeCells("A1:E1");
+      const titleRow = worksheet.getRow(1);
+      titleRow.getCell(1).value = "34th senior State fencing championship";
+      titleRow.getCell(1).alignment = { horizontal: "center" };
+      titleRow.font = { bold: true, size: 16 };
+      
+      // Gender Row
+      worksheet.mergeCells("A2:E2");
+      const genderRow = worksheet.getRow(2);
+      genderRow.getCell(1).value = gender === "Male" ? "BOYS" : "GIRLS";
+      genderRow.getCell(1).alignment = { horizontal: "center" };
+      genderRow.font = { bold: true, size: 14 };
+  
+      // Headers
+      const headers = ["Sr. No.", "Name", "DOB", "School Name", "Event"];
+      worksheet.addRow(headers);
+      const headerRow = worksheet.getRow(3);
+      headerRow.eachCell((cell) => {
+        cell.font = { bold: true };
+        cell.alignment = { horizontal: "center" };
+        cell.fill = {
+          type: "pattern",
+          pattern: "solid",
+          fgColor: { argb: "FFFF00" }, // Yellow
+        };
+      });
+  
+      // Add players with event-based colors
+      playersArray.forEach((entry, index) => {
+        const row = worksheet.addRow([
+          index + 1,
+          entry.fullName,
+          entry.dob,
+          entry.schoolCollegeName,
+          entry.eventName,
+        ]);
+  
+        // Apply background color based on event
+        let bgColor = "FFFFFF"; // Default white
+        if (entry.eventName === "Epee") bgColor = "FFFF99"; // Light Yellow
+        if (entry.eventName === "Foil") bgColor = "FF9999"; // Light Red
+        if (entry.eventName === "Sabre") bgColor = "99CCFF"; // Light Blue
+  
+        row.eachCell((cell) => {
+          cell.fill = {
+            type: "pattern",
+            pattern: "solid",
+            fgColor: { argb: bgColor },
+          };
+        });
+      });
+  
+      // Auto-adjust column width
+      worksheet.columns.forEach((column) => {
+        column.width = 15;
+      });
+  
+      // Generate Excel file
+      const buffer = await workbook.xlsx.writeBuffer();
+      const blob = new Blob([buffer], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+      saveAs(blob, `players_entries.xlsx`);
+    } catch (error) {
+      console.log(error);
+    }
   };
+  
 
   return (
     <div className="w-full min-h-screen bg-blue-600 p-5">
@@ -178,7 +215,6 @@ const CreateEntry = () => {
 
         <form id="FormEle" onSubmit={exportPlayers}>
           <div className="w-full flex justify-between items-center">
-           
             <select
               className="w-[50%]"
               id="tournamentSelect"
@@ -196,7 +232,6 @@ const CreateEntry = () => {
                 })}
             </select>
 
-            
             <select
               className="w-[30%]"
               onChange={handleGenderChange}

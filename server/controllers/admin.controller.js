@@ -24,7 +24,9 @@ const handleGetRequestdPlayers = async (req, res) => {
 
 //player realted controllers
 const handleAcceptPlayer = async(req,res)=>{
-   const pid = req.params.pid;
+   const {pid} = req.params
+   console.log(pid);
+   
    try {
       await acceptPlayer(pid);
    } catch (error) {

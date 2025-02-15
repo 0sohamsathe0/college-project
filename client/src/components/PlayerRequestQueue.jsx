@@ -17,6 +17,40 @@ const PlayerRequestQueue = () => {
     fetchPlayers();
   }, []);
 
+
+  const acceptPlayer = async (pid) => {
+    try {
+      const pidno = Number(pid);
+      const url =`http://localhost:3500/admin/accept-player/${pidno}`;
+      console.log(url);
+      
+      let response = await axios.post(url);
+      console.log(response.message);
+      location.reload()
+      
+    } catch (error) {
+      console.error("Error accepting player:", error);
+    }
+  }
+
+  const rejectPlayer = async (pid) => {
+    try {
+      const pidno = Number(pid);
+      const url =`http://localhost:3500/admin/reject-player/${pidno}`;
+      console.log(url);
+      
+      let response = await axios.post(url);
+      console.log(response.message);
+      location.reload()
+      
+    } catch (error) {
+      console.error("Error accepting player:", error);
+    }
+    window.location.reload();
+  }
+
+
+
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Player Request Queue</h1>
@@ -42,8 +76,8 @@ const PlayerRequestQueue = () => {
                   <td className="border text-black border-gray-300 px-4 py-2">{request.aadharCardNumber}</td>
                   <td className="border text-black border-gray-300 px-4 py-2">{request.dob}</td>
                   <td className="border text-black border-gray-300 px-4 py-2">{request.eventName}</td>
-                  <td className="border text-black border-gray-300 px-4 py-2"><button className='bg-green-600 text-white rounded-md  p-2'>Accept</button></td>
-                  <td className="border text-black border-gray-300 px-4 py-2"><button className='bg-red-600 text-white rounded-md  p-2'>Reject</button></td>
+                  <td className="border text-black border-gray-300 px-4 py-2"><button className='bg-green-600 text-white rounded-md  p-2' onClick={()=>acceptPlayer(request.pid)}>Accept</button></td>
+                  <td className="border text-black border-gray-300 px-4 py-2"><button className='bg-red-600 text-white rounded-md  p-2' onClick={()=>rejectPlayer(request.pid)}>Reject</button></td>
                 </tr>
               ))
             ) : (

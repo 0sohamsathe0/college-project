@@ -198,9 +198,9 @@ const Entry = () => {
     },
   ];
 
-  const exportToExcel = async (gender) => {
+  const exportToExcel = async () => {
     const workbook = new ExcelJS.Workbook();
-    const worksheet = workbook.addWorksheet(`${gender} Entries`);
+    const worksheet = workbook.addWorksheet(`Player Entries`);
 
     worksheet.addRow(["Sr. No.", "Name", "DOB", "School Name", "Event"]);
 

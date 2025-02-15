@@ -7,7 +7,6 @@ import PlayerRequestQueue from "./PlayerRequestQueue.jsx";
 import { useState,useEffect } from "react";
 import axios from "axios";
 import CreateEntry from "./CreateEntry.jsx";
-import Entry from "./Entry.jsx";
 
 const AdminProfile = () => {
     const [event, setEvent] = useState("all");
@@ -234,9 +233,6 @@ const AdminProfile = () => {
 
           </div>
           <CreateEntry/>
-          <br />
-          <br />
-          <Entry/>
         </main>
       </div>
     </div>

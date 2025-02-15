@@ -1,4 +1,4 @@
-import { React, useRef, useState } from "react";
+import { React, useState } from "react";
 import PlayerLoginImage from "../assets/PlayerLoginImage.png";
 import Logo from "../assets/Logo.png";
 import "../App.css";
@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const PlayerLogin = () => {
-  const inputReference = useRef(null);
   const navigate = useNavigate();
 
   const [playerLogin, setPlayerLogin] = useState({
@@ -14,54 +13,65 @@ const PlayerLogin = () => {
     dob: "",
   });
 
-  //const [storePlayerLoginData, setStorePlayerLoginData] = useState({});  //send state on backend
+  const [errors, setErrors] = useState({});
 
-  let propertyName, propertyValue;
   const loginUser = (event) => {
-    propertyName = event.target.name;
-    propertyValue = event.target.value;
+    const { name, value } = event.target;
+    setPlayerLogin({ ...playerLogin, [name]: value });
 
-    setPlayerLogin({ ...playerLogin, [propertyName]: propertyValue });
+    // Clear validation error when user types
+    setErrors({ ...errors, [name]: "" });
+  };
+
+  const validateForm = () => {
+    let newErrors = {};
+
+    // Aadhaar Number Validation
+    if (!playerLogin.aadharCardNumber) {
+      newErrors.aadharCardNumber = "Aadhaar number is required";
+    } else if (!/^\d{12}$/.test(playerLogin.aadharCardNumber)) {
+      newErrors.aadharCardNumber = "Aadhaar must be exactly 12 digits";
+    }
+
+    // Date of Birth Validation
+    if (!playerLogin.dob) {
+      newErrors.dob = "Date of Birth is required";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const sendPlayerLoginData = async (event) => {
+    event.preventDefault();
+
+    if (!validateForm()) return;
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3500/players/login",
+        JSON.stringify(playerLogin),
+        { headers: { "Content-Type": "application/json" } }
+      );
+
+      console.log(response.data.token);
+      document.cookie = `jwtToken=${response.data.token}`;
+      navigate("/playerprofile");
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
 
   const handleRoute = () => {
     navigate("/admin");
   };
 
-  const sendPlayerLoginData = async (event) => {
-    event.preventDefault();
-    if (playerLogin.aadharCardNumber.toString().length != 12) {
-      alert("Aadhar Card cannot contain more than 12 characters");
-    } else {
-      const data = JSON.stringify(playerLogin);
-
-      try {
-        let response = await axios.post(
-          "http://localhost:3500/players/login",
-          data,
-          { headers: { "Content-Type": "application/json" } }
-        );
-
-        console.log(response.data.token);
-        document.cookie = `jwtToken=${response.data.token}`;
-        navigate("/playerprofile");
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    }
-    setPlayerLogin({
-      aadharCardNumber: "",
-      dob: "",
-    });
-    console.log(playerLogin);
-  };
-
   return (
     <>
       <div className="bg-blue-700 h-[89vh] px-[100px] flex justify-center items-center">
         <form
-          method="post"
-          className=" bg-white w-[80%] flex justify-between items-center pt-4 px-10 rounded-3xl text-white"
+          onSubmit={sendPlayerLoginData}
+          className="bg-white w-[80%] flex justify-between items-center pt-4 px-10 rounded-3xl text-white"
         >
           <div className="loginImage w-1/2">
             <img src={PlayerLoginImage} alt="Login Image" className="w-full" />
@@ -76,25 +86,29 @@ const PlayerLogin = () => {
               <span className="w-[40%] border border-black"></span>
             </div>
             <div className="my-5 w-full">
+              {/* Aadhaar Input */}
               <div className="w-full my-5 px-5">
                 <label
                   htmlFor="aadharCardNumber"
                   className="font-bold text-xl text-black"
                 >
-                  Aadhar Card Number:
+                  Aadhaar Card Number:
                 </label>
                 <input
-                  type="number"
+                  type="text"
                   name="aadharCardNumber"
                   id="aadharCardNumber"
                   className="w-full h-[3rem] font-bold px-3 border border-black text-black my-2"
-                  value={playerLogin.aadharCardNumber}
                   placeholder="0000-0000-0000"
-                  maxLength="12"
+                  value={playerLogin.aadharCardNumber}
                   onChange={loginUser}
-                  ref={inputReference}
                 />
+                {errors.aadharCardNumber && (
+                  <p className="text-red-500">{errors.aadharCardNumber}</p>
+                )}
               </div>
+
+              {/* Date of Birth Input */}
               <div className="w-full my-5 px-5">
                 <label htmlFor="dob" className="font-bold text-xl text-black">
                   Date Of Birth:
@@ -106,15 +120,15 @@ const PlayerLogin = () => {
                   className="w-full h-[3rem] font-bold px-3 border border-black text-black my-2"
                   value={playerLogin.dob}
                   onChange={loginUser}
-                  ref={inputReference}
                 />
+                {errors.dob && <p className="text-red-500">{errors.dob}</p>}
               </div>
             </div>
+
             <div className="flex space-x-5">
               <button
                 type="submit"
                 className="text-xl text-white font-bold px-5 py-3 rounded-lg bg-blue-400 mb-5"
-                onClick={sendPlayerLoginData}
               >
                 Login
               </button>

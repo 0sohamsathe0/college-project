@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const PlayerRegister = () => {
   const [formData, setFormData] = useState({
@@ -15,6 +16,8 @@ const PlayerRegister = () => {
     pincode: "",
     schoolCollegeName: "",
   });
+
+  const navigate = useNavigate();
 
   const [photo, setPhoto] = useState(null);
   const [aadharCardPhoto, setAadharCardPhoto] = useState(null);
@@ -67,6 +70,7 @@ const PlayerRegister = () => {
 
       console.log(response.data);
       alert("Player registered successfully!");
+      navigate("/playerLogin")
     } catch (error) {
       console.log(error);
 
