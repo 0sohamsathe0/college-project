@@ -15,12 +15,6 @@ const CreateEntry = () => {
   const [selectTournament, setSelectTournament] = useState();
   const [tournamentList, setTournamentList] = useState([]);
   const [playerList, setPlayerList] = useState([]);
-  const [allSortedPlayers, setAllSortedPlayers] = useState([]);
-
-  console.log(playerNameArray);
-
-  console.log(playerList);
-
   const handleGenderChange = (e) => {
     setGender(e.target.value);
     console.log(e.target.value);
@@ -39,7 +33,6 @@ const CreateEntry = () => {
       console.error("Error fetching data:", error);
     }
   };
-  console.log(tournamentList);
 
   useEffect(() => {
     if (!selectTournament || playerList.length === 0) return;
@@ -102,19 +95,16 @@ const CreateEntry = () => {
       .filter((player) => playerNameArray.includes(player.fullName))
       .map((player) => player);
   };
-  console.log(foilPlayers);
 
   const sabrePlayerArray = () => {
     return sabrePlayers
       .filter((player) => playerNameArray.includes(player.fullName))
       .map((player) => player);
   };
-  console.log(sabrePlayers);
 
   const chooseTournament = (e) => {
     setSelectTournament(e.target.value);
   };
-  console.log(selectTournament);
 
   const exportPlayers = async (e) => {
     e.preventDefault();
@@ -203,7 +193,34 @@ const CreateEntry = () => {
     } catch (error) {
       console.log(error);
     }
+
+   sendSinglePlayertoDatabase(playersArray)
   };
+
+  const sendSinglePlayertoDatabase = async (playersArray) => {
+    console.log(playersArray);
+    
+    for (const singlePlayer of playersArray) { 
+      const data = {
+        tid: Number(selectTournament),
+        pid: singlePlayer.pid, 
+        tevent: singlePlayer.eventName,
+      };
+  
+      try {
+        const response = await axios.post("http://localhost:3500/admin/createEntry", data, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+  
+        console.log("Response:", response.data); 
+      } catch (error) {
+        console.error("Error for player:", singlePlayer.pid, error.message);
+      }
+    }
+  };
+  
   
 
   return (

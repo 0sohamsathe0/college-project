@@ -136,9 +136,7 @@ const handleCreateEntry = async(req,res)=>{
    if(!tid || !pid || !tevent){
       return res.status(400).json({ message : "all fields are required"})
    }
-
-   await createEntry(tid,pid,tevent);
-
+   await createEntry(pid,tid,tevent);
    res.status(200).json({ message : "Entry created successfully " })
 }
 

@@ -37,7 +37,7 @@ const MeritCertificate = () => {
           form_data.append("certificatePhoto", photo);
       
       
-            const response = await axios.post("http://localhost:3500/admin/add-certificate/participation", form_data, {
+            const response = await axios.post("http://localhost:3500/admin/add-certificate/merit", form_data, {
               headers: {
                 "Content-Type": "multipart/form-data",
               },
