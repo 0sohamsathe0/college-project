@@ -1,4 +1,16 @@
-import { getPendingPlayers , acceptPlayer , rejectPlayer , addTournament, addPartiCerti , addMeritCerti ,getAllTournaments , sortbyevent , createEntry} from "../database.js";
+import { getPendingPlayers,
+   acceptPlayer,
+   rejectPlayer,
+   addTournament,
+   addPartiCerti,
+   addMeritCerti,
+   getAllTournaments,
+   sortbyevent,
+   createEntry,
+   addIndividualResult,
+   addTeamResult,
+   addChampionshipResult
+} from "../database.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 
@@ -34,7 +46,6 @@ const handleAcceptPlayer = async(req,res)=>{
    }
    res.status(200).json({message : `player Accepted with player id ${pid}`})
 }
-
 const handleRejectPlayer = async(req,res)=>{
    const pid = req.params.pid;
    try {
@@ -67,7 +78,6 @@ await addTournament(title,startingDate,endDate,locationState,locationCity,tlevel
 
 res.status(200).json({ message : `Tournament added successfully `,title : `${title}`})
 }
-
 const handleGetAllTournament =async (req,res) => {
    const allTournaments = await getAllTournaments();
    if(!allTournaments){return res.status(400).json({ message : "No tournaments Available to display"})}
@@ -75,16 +85,36 @@ const handleGetAllTournament =async (req,res) => {
 }
 
 
-
 //result related controllers
 const handleAddIndividualResult = async (req,res) => {
-   
-}
+   const { tentryid , position} = req.body;
 
+   if(!tentryid || !position ){
+      return res.status(400).json({ message : "all fields are required"})
+   }
+   await addIndividualResult(tentryid,position);
+   res.status(200).json({ message : "Individual result added successfully " })
+
+}
 const handleAddTeamResult = async (req,res) => {
+   const {tid,event,gender,position} = req.body;
    
-}
+   if(!tid || !event || !gender || !position ){
+      return res.status(400).json({ message : "all fields are required"})
+   }
 
+   await addTeamResult(tid,event,gender,position);
+   res.status(200).json({ message : "Team result added successfully " })
+}
+const handleAddChampionshipResult = async (req,res) => {
+   const{tid,gender,position} = req.body;
+   if(!tid|| !gender || !position){
+      return res.status(400).json({ message : "all fields are required"})
+   }
+
+   await addChampionshipResult(tid,gender,position);
+   res.status(200).json({ message : "Championship result added successfully " })
+}
 
 
 //certificates related controllers
@@ -112,7 +142,6 @@ const handleAddParticipationCertificate = async (req,res) => {
    await addPartiCerti(tid,pid,certificateUrl);
    res.status(200).json({ message : "participation cerificate added successfully " })
 }
-
 
 
 const handleEventSort = async(req,res)=>{
@@ -154,4 +183,17 @@ const handleAdminLogin = async(req,res)=>{
    }
 }
 
-export { handleGetRequestdPlayers , handleAcceptPlayer ,handleRejectPlayer ,handleAddTournament ,handleAddMeritCertificate ,handleAddParticipationCertificate ,handleAddIndividualResult,handleAddTeamResult , handleGetAllTournament,handleEventSort , handleCreateEntry};
+export { handleGetRequestdPlayers,
+   handleAcceptPlayer,
+   handleRejectPlayer,
+   handleAddTournament,
+   handleAddMeritCertificate,
+   handleAddParticipationCertificate,
+   handleAddIndividualResult,
+   handleAddTeamResult,
+   handleGetAllTournament,
+   handleEventSort,
+   handleCreateEntry,
+   handleAddChampionshipResult,
+   handleAdminLogin,
+};

@@ -4,20 +4,17 @@ import { upload } from "../middlewares/multer.middelware.js";
 
 const router = express.Router()
 
-router.route("/all-players").get(getAllPlayers);
+//get players
+router.get("/all-players", getAllPlayers);
+router.get("/:pid" , getPlayerDetail);
 
-router.post("/login", handleLogin);
-
-router.get("/verifyPlayer",handleVerifyPlayer)
-
+//login or register
 router.post("/",upload.fields([{ name: 'photo', maxCount: 1 }, { name: 'aadharCardPhoto', maxCount: 1 }]) ,registerPlayer);
-
-
-router.route("/:pid")
- .get(getPlayerDetail)
- 
+router.get("/verifyPlayer",handleVerifyPlayer);
+router.post("/login", handleLogin);
 
  // get certificates 
  router.get("/get-participation-certificates/:pid", handleGetPartiCerti);
  router.get("/get-Merit-certificates/:pid", handleGeMeritCerti);
+
 export default router;

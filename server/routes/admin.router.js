@@ -1,5 +1,17 @@
 import express from 'express';
-import { handleGetRequestdPlayers , handleAcceptPlayer ,handleRejectPlayer ,handleAddTournament ,handleAddMeritCertificate ,handleAddParticipationCertificate ,handleAddIndividualResult,handleAddTeamResult,handleGetAllTournament,handleEventSort,handleCreateEntry } from "../controllers/admin.controller.js"
+import { handleGetRequestdPlayers,
+    handleAcceptPlayer,
+    handleRejectPlayer,
+    handleAddTournament,
+    handleAddMeritCertificate,
+    handleAddParticipationCertificate,
+    handleAddIndividualResult,
+    handleAddTeamResult,
+    handleGetAllTournament,
+    handleEventSort,
+    handleCreateEntry,
+    handleAddChampionshipResult,
+ } from "../controllers/admin.controller.js"
 import { upload } from "../middlewares/multer.middelware.js";
 
 const router = express.Router()
@@ -27,9 +39,11 @@ router.post("/add-certificate/participation",upload.single('certificatePhoto'),h
 router.get("/eventWiseSort",handleEventSort);
 
 //result update related routs
-router.post("/add-result/individual" ,handleAddIndividualResult)
-router.post("/add-result/Team" , handleAddTeamResult)
+router.post("/add-result/individual" , handleAddIndividualResult)
+router.post("/add-result/team" , handleAddTeamResult)
+router.post("/add-result/championship" , handleAddChampionshipResult)
 
+//entry related routes
 router.post("/createEntry" ,handleCreateEntry);
 
 export default router;
