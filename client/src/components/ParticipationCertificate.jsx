@@ -3,7 +3,6 @@ import axios from "axios";
 import { use } from "react";
 
 const ParticipationCertificate = () => {
-  // const [certificate, setCertificate] = useState("");
   const [players, setPlayers] = useState([]);
   const [tournaments, setTournaments] = useState([]);
   const [data, setData] = useState({ pid:1, tid:1});
@@ -34,6 +33,8 @@ const ParticipationCertificate = () => {
     });
 
     form_data.append("certificatePhoto", photo);
+    console.log(form_data);
+    
 
 
       const response = await axios.post("http://localhost:3500/admin/add-certificate/participation", form_data, {
@@ -42,6 +43,7 @@ const ParticipationCertificate = () => {
         },
       });
       console.log("post req is made");
+      alert("Participation Certificate Added Successfully");
 
       console.log(response.data);
     e.preventDefault();
@@ -74,11 +76,11 @@ const ParticipationCertificate = () => {
       </h1>
       <div className="flex justify-center items-center gap-3 py-3">
         <p className="font-bold text-md">Player Name :</p>
-        <select className="w-[30%]" name="pid"onChange={handleDataChange}>
+        <select className="w-[30%]" name="pid" onChange={handleDataChange}>
           {players.map((player) => {
             return (
               <option key={player.pid} value={player.pid}>
-                {player.fullName}{player.pid}
+                {player.fullName}
               </option>
             );
           })}

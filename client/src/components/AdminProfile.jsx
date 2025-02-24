@@ -12,8 +12,6 @@ const AdminProfile = () => {
     const [event, setEvent] = useState("all");
     const [category, setCategory] = useState("all");
     const [players, setPlayers] = useState([]);
-    const [participationCertificate, setParticipationCertificate] = useState({});
-    const [meritCertificate, setMeritCertificate] = useState({});
     const navigate = useNavigate();
 
     const fetchPlayers = async () => {
@@ -112,7 +110,7 @@ const AdminProfile = () => {
         <h1 className="text-2xl font-bold">Admin Dashboard</h1>
         <button
           className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-          onClick={() => {document.cookie = "loginState=; expires=Thu, 01 Jan 1970 00:00:00 GMT"; navigate('/admin')}}
+          onClick={() => {document.cookie = "loginState=; expires=Thu, 01 Jan 1970 00:00:00 GMT"; navigate('/admin'); window.location.reload()}}
         >
           Logout
         </button>

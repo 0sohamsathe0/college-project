@@ -168,16 +168,16 @@ const PlayerProfile = () => {
               </h2>
 
               <div className="relative overflow-x-auto">
-                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                  <thead class="text-xs text-gray-900 uppercase dark:text-gray-400">
+                <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                  <thead className="text-xs text-gray-900 uppercase dark:text-gray-400">
                     <tr>
-                      <th scope="col" class="px-6 py-3">
+                      <th scope="col" className="px-6 py-3">
                         Sr.No
                       </th>
-                      <th scope="col" class="px-6 py-3">
+                      <th scope="col" className="px-6 py-3">
                         Title of Tournament
                       </th>
-                      <th scope="col" class="px-6 py-3">
+                      <th scope="col" className="px-6 py-3">
                         Preview Certificate
                       </th>
                     </tr>
@@ -185,17 +185,17 @@ const PlayerProfile = () => {
                   <tbody>
                     {meritCertificate.length > 0 &&
                       meritCertificate.map((certificate, index) => (
-                        <tr class="bg-white dark:bg-gray-800" key={index}>
+                        <tr className="bg-white dark:bg-gray-800" key={index}>
                           <th
                             scope="row"
-                            class="px-2 py-4 font-medium text-black whitespace-nowrap"
+                            className="px-2 py-4 font-medium text-black whitespace-nowrap"
                           >
                             {index + 1}
                           </th>
-                          <td class="px-6 py-4 font-medium text-black">
+                          <td className="px-6 py-4 font-medium text-black">
                             {certificate.title}
                           </td>
-                          <td class="px-6 py-4 font-medium">
+                          <td className="px-6 py-4 font-medium">
                             <a className="bg-blue-400 text-white rounded-sm px-3 py-2" href={certificate.certificateUrl} target="_blank">
                               Preview
                             </a>
@@ -212,16 +212,16 @@ const PlayerProfile = () => {
                 Participation Certificate
               </h2>
               <div class="relative overflow-x-auto">
-                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                  <thead class="text-xs text-gray-900 uppercase dark:text-gray-400">
+                <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                  <thead className="text-xs text-gray-900 uppercase dark:text-gray-400">
                     <tr>
-                      <th scope="col" class="px-6 py-3">
+                      <th scope="col" className="px-6 py-3">
                         Sr.No
                       </th>
-                      <th scope="col" class="px-6 py-3">
+                      <th scope="col" className="px-6 py-3">
                         Title of Tournament
                       </th>
-                      <th scope="col" class="px-6 py-3">
+                      <th scope="col" className="px-6 py-3">
                         Preview Certificate
                       </th>
                     </tr>
@@ -229,17 +229,17 @@ const PlayerProfile = () => {
                   <tbody>
                     {participationCertificate.length > 0 &&
                       participationCertificate.map((certificate, index) => (
-                        <tr class="bg-white dark:bg-gray-800" key={index}>
+                        <tr className="bg-white dark:bg-gray-800" key={index}>
                           <th
                             scope="row"
-                            class="px-2 py-4 font-medium text-black whitespace-nowrap"
+                            className="px-2 py-4 font-medium text-black whitespace-nowrap"
                           >
                             {index + 1}
                           </th>
-                          <td class="px-6 py-4 font-medium text-black">
+                          <td className="px-6 py-4 font-medium text-black">
                             {certificate.title}
                           </td>
-                          <td class="px-6 py-4 font-medium">
+                          <td className="px-6 py-4 font-medium">
                             <a className="bg-blue-400 text-white rounded-sm px-3 py-2" href={certificate.certificateUrl} target="_blank">
                               Preview
                             </a>
@@ -258,6 +258,7 @@ const PlayerProfile = () => {
                 document.cookie =
                   "jwtToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
                 navigate("/playerLogin");
+                window.location.reload();
               }}
             >
               Logout
