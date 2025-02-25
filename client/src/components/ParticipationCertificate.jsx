@@ -70,7 +70,7 @@ const ParticipationCertificate = () => {
   }, []);
 
   return (
-    <div className="w-full bg-white rounded-md mt-3 flex flex-col justify-center">
+    <div className="w-full bg-white rounded-md mt-3 flex flex-col justify-center shadow-[0_20px_20px_rgba(0,0,0,0.25)]">
       <h1 className="w-full text-center font-bold py-4 text-xl">
         Add Participation Certificate
       </h1>

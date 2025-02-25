@@ -52,7 +52,7 @@ const PlayerRequestQueue = () => {
 
 
   return (
-    <div className="p-4">
+    <div className="p-4 shadow-[0_20px_20px_rgba(0,0,0,0.25)]">
       <h1 className="text-2xl font-bold mb-4">Player Request Queue</h1>
       <div className="overflow-x-auto">
         <table className="table-auto w-full text-left rounded-lg">

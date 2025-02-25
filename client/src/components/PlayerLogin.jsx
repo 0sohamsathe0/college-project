@@ -19,21 +19,18 @@ const PlayerLogin = () => {
     const { name, value } = event.target;
     setPlayerLogin({ ...playerLogin, [name]: value });
 
-    // Clear validation error when user types
     setErrors({ ...errors, [name]: "" });
   };
 
   const validateForm = () => {
     let newErrors = {};
 
-    // Aadhaar Number Validation
     if (!playerLogin.aadharCardNumber) {
       newErrors.aadharCardNumber = "Aadhaar number is required";
     } else if (!/^\d{12}$/.test(playerLogin.aadharCardNumber)) {
       newErrors.aadharCardNumber = "Aadhaar must be exactly 12 digits";
     }
 
-    // Date of Birth Validation
     if (!playerLogin.dob) {
       newErrors.dob = "Date of Birth is required";
     }
@@ -56,6 +53,7 @@ const PlayerLogin = () => {
 
       console.log(response.data.token);
       document.cookie = `jwtToken=${response.data.token}`;
+      
       navigate("/playerprofile");
     } catch (error) {
       console.error("Error fetching data:", error);

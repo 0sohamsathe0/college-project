@@ -10,6 +10,7 @@ const PlayerProfile = () => {
   const navigate = useNavigate();
 
   const fetchPlayers = async () => {
+    
     const token = document.cookie.split("jwtToken=")[1];
     console.log(token);
 
@@ -29,7 +30,6 @@ const PlayerProfile = () => {
       handleAccount(response.data.player[0].pid);
     }
   };
-  console.log(meritCertificate, participationCertificate);
 
   useEffect(() => {
     fetchPlayers();

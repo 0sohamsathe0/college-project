@@ -3,8 +3,6 @@ import axios from "axios";
 import ExcelJS from "exceljs";
 import { saveAs } from "file-saver";
 
-//googlesheet url
-// https://script.google.com/macros/s/AKfycbyr_fd3NtVlNQ6W7q-jsq01hwGBjyv4KSvHpJN5Mab-zLbwFW4elO1P1yJi67P6Gka6/exec
 
 const CreateEntry = () => {
   const [epeePlayers, setEpeePlayers] = useState([]);
@@ -126,21 +124,21 @@ const CreateEntry = () => {
       const workbook = new ExcelJS.Workbook();
       const worksheet = workbook.addWorksheet(`Player Entries`);
   
-      // Title Row
+     
       worksheet.mergeCells("A1:E1");
       const titleRow = worksheet.getRow(1);
       titleRow.getCell(1).value = "34th senior State fencing championship";
       titleRow.getCell(1).alignment = { horizontal: "center" };
       titleRow.font = { bold: true, size: 16 };
       
-      // Gender Row
+      
       worksheet.mergeCells("A2:E2");
       const genderRow = worksheet.getRow(2);
       genderRow.getCell(1).value = gender === "Male" ? "BOYS" : "GIRLS";
       genderRow.getCell(1).alignment = { horizontal: "center" };
       genderRow.font = { bold: true, size: 14 };
   
-      // Headers
+      
       const headers = ["Sr. No.", "Name", "DOB", "School Name", "Event"];
       worksheet.addRow(headers);
       const headerRow = worksheet.getRow(3);
@@ -154,7 +152,7 @@ const CreateEntry = () => {
         };
       });
   
-      // Add players with event-based colors
+      
       playersArray.forEach((entry, index) => {
         const row = worksheet.addRow([
           index + 1,
@@ -164,11 +162,11 @@ const CreateEntry = () => {
           entry.eventName,
         ]);
   
-        // Apply background color based on event
-        let bgColor = "FFFFFF"; // Default white
-        if (entry.eventName === "Epee") bgColor = "FFFF99"; // Light Yellow
-        if (entry.eventName === "Foil") bgColor = "FF9999"; // Light Red
-        if (entry.eventName === "Sabre") bgColor = "99CCFF"; // Light Blue
+        
+        let bgColor = "FFFFFF"; 
+        if (entry.eventName === "Epee") bgColor = "FFFF99"; 
+        if (entry.eventName === "Foil") bgColor = "FF9999"; 
+        if (entry.eventName === "Sabre") bgColor = "99CCFF"; 
   
         row.eachCell((cell) => {
           cell.fill = {
@@ -178,13 +176,12 @@ const CreateEntry = () => {
           };
         });
       });
-  
-      // Auto-adjust column width
+
+
       worksheet.columns.forEach((column) => {
         column.width = 15;
       });
   
-      // Generate Excel file
       const buffer = await workbook.xlsx.writeBuffer();
       const blob = new Blob([buffer], {
         type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
@@ -224,8 +221,8 @@ const CreateEntry = () => {
   
 
   return (
-    <div className="w-full min-h-screen bg-blue-600 p-5">
-      <div className="bg-white rounded-lg w-full mt-20 p-5">
+    <div className="">
+      <div className="bg-white rounded-lg w-full mt-20 p-5 shadow-[0_20px_20px_rgba(0,0,0,0.25)]">
         <h1 className="text-center text-2xl font-bold text-black p-5">
           Create Tournament Entry
         </h1>
