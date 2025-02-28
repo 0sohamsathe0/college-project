@@ -1,4 +1,4 @@
-import { getPendingPlayers , acceptPlayer , rejectPlayer , addTournament, addPartiCerti , addMeritCerti ,getAllTournaments , sortbyevent , createEntry} from "../database.js";
+import { getPendingPlayers , acceptPlayer , rejectPlayer , addTournament, addPartiCerti , addMeritCerti ,getAllTournaments , sortbyevent , createEntry,addIndividualResult , addTeamResult,addChampionshipResult} from "../database.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 
@@ -78,11 +78,33 @@ const handleGetAllTournament =async (req,res) => {
 
 //result related controllers
 const handleAddIndividualResult = async (req,res) => {
-   
-}
+   const { tentryid , position} = req.body;
 
+   if(!tentryid || !position ){
+      return res.status(400).json({ message : "all fields are required"})
+   }
+   await addIndividualResult(tentryid,position);
+   res.status(200).json({ message : "Individual result added successfully " })
+
+}
 const handleAddTeamResult = async (req,res) => {
+   const {tid,event,gender,position} = req.body;
    
+   if(!tid || !event || !gender || !position ){
+      return res.status(400).json({ message : "all fields are required"})
+   }
+
+   await addTeamResult(tid,event,gender,position);
+   res.status(200).json({ message : "Team result added successfully " })
+}
+const handleAddChampionshipResult = async (req,res) => {
+   const{tid,gender,position} = req.body;
+   if(!tid|| !gender || !position){
+      return res.status(400).json({ message : "all fields are required"})
+   }
+
+   await addChampionshipResult(tid,gender,position);
+   res.status(200).json({ message : "Championship result added successfully " })
 }
 
 
@@ -154,4 +176,4 @@ const handleAdminLogin = async(req,res)=>{
    }
 }
 
-export { handleGetRequestdPlayers , handleAcceptPlayer ,handleRejectPlayer ,handleAddTournament ,handleAddMeritCertificate ,handleAddParticipationCertificate ,handleAddIndividualResult,handleAddTeamResult , handleGetAllTournament,handleEventSort , handleCreateEntry};
+export { handleGetRequestdPlayers , handleAcceptPlayer ,handleRejectPlayer ,handleAddTournament ,handleAddMeritCertificate ,handleAddParticipationCertificate , handleGetAllTournament,handleEventSort ,handleAddIndividualResult,handleAddTeamResult,handleAddChampionshipResult, handleCreateEntry};

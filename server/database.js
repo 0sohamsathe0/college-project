@@ -160,6 +160,20 @@ const addMeritCerti = async (tid , pid ,url) => {
 
 
 //Add Result
+const addIndividualResult = async (tentryid,position) => {
+  const query = "insert into individual_results (tentryid,position) values (?,?)"
+  await pool.query(query,[tentryid,position]);  
+}
+
+const addTeamResult = async (tid,event,gender,position) => {
+  const query = "insert into team_results (tid,event,gender,position) values (?,?,?,?)"
+  await pool.query(query,[tid,event,gender,position]);
+}
+
+const addChampionshipResult = async (tid,gender,position) => {
+  const query = "insert into championship_results (tid,gender,position) values (?,?,?)"
+  await pool.query(query,[tid,gender,position]);
+}
 
 
 
@@ -188,5 +202,8 @@ export {
   addMeritCerti,
   getAllTournaments,
   getSpecificTournament,sortbyevent,
-  createEntry
+  createEntry,
+  addIndividualResult,
+  addTeamResult,
+  addChampionshipResult
 };
