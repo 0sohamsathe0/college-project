@@ -1,10 +1,11 @@
 import express from "express";
-import{ getAllPlayers , getPlayerDetail , registerPlayer ,handleGetPartiCerti ,handleGeMeritCerti ,handleLogin, handleVerifyPlayer } from "../controllers/player.controller.js"
+import{ getAllPlayers , getPlayerDetail , registerPlayer ,handleGetPartiCerti ,handleGeMeritCerti ,handleLogin, handleVerifyPlayer,getPlayersInTournament } from "../controllers/player.controller.js"
 import { upload } from "../middlewares/multer.middelware.js";
 
 const router = express.Router()
 
 router.route("/all-players").get(getAllPlayers);
+router.route("/all-players/:tid").get(getPlayersInTournament);
 
 router.post("/login", handleLogin);
 

@@ -24,6 +24,11 @@ async function getSinglePlayer(pid) {
   return rows;
 }
 
+async function getPlayersByTournament(tid) {
+  const [rows] = await pool.query(`SELECT * FROM player_details WHERE pid IN (SELECT pid FROM tournament_entry WHERE tid = ${tid});`);
+  return rows;
+}
+
 async function lastId() {
   const [rows] = await pool.query(
     `select LAST_INSERT_ID(pid) from player_details;`
@@ -205,5 +210,6 @@ export {
   createEntry,
   addIndividualResult,
   addTeamResult,
-  addChampionshipResult
+  addChampionshipResult,
+  getPlayersByTournament
 };

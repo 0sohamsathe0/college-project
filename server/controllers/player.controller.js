@@ -1,4 +1,4 @@
-import{ getPlayers, getSinglePlayer, insertplayer ,pool ,getSpecificTournament} from"../database.js"
+import{ getPlayers, getSinglePlayer, insertplayer ,pool ,getSpecificTournament , getPlayersByTournament} from"../database.js"
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
@@ -40,7 +40,14 @@ async function getPlayerDetail(req , res) {
   const player = await getSinglePlayer(pid);
   res.send(player);
 }
-
+async function getPlayersInTournament(req,res) {
+  const tid = req.params.tid
+  if(!tid){
+    return res.status(400).json({message : "tid is required"})
+  }
+    const players = await getPlayersByTournament(tid);
+    res.send(players)
+}
 
 
 // Player Register
@@ -208,4 +215,4 @@ async function handleGeMeritCerti(req,res) {
 
 
 
-export { getAllPlayers, getPlayerDetail , registerPlayer ,handleGetPartiCerti ,handleGeMeritCerti , handleLogin, handleVerifyPlayer}
+export { getAllPlayers, getPlayerDetail , registerPlayer ,handleGetPartiCerti ,handleGeMeritCerti , handleLogin, handleVerifyPlayer , getPlayersInTournament}
