@@ -1,5 +1,5 @@
 import { log } from "console";
-import { getPendingPlayers , acceptPlayer , rejectPlayer , addTournament, addPartiCerti , addMeritCerti ,getAllTournaments , sortbyevent , createEntry,addIndividualResult , addTeamResult,addChampionshipResult , getTentryid} from "../database.js";
+import { getPendingPlayers , acceptPlayer , rejectPlayer , addTournament, addPartiCerti , addMeritCerti ,getAllTournaments , sortbyevent , createEntry,addIndividualResult , addTeamResult,addChampionshipResult , getTentryid , getLatestTournaments } from "../database.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 
@@ -119,6 +119,19 @@ const handleGetTentry = async(req,res)=>{
    res.status(200).json({ 'tentryid':tentryid})
 }
 
+const handleGetLatestTournaments = async(req,res)=>{
+ const tournaments = await getLatestTournaments();
+ var filtered = tournaments.filter(function (el) {
+   return el != null;
+ });
+
+ return res.status(200).json({filtered})
+}
+
+
+
+
+
 
 //certificates related controllers
 const handleAddMeritCertificate = async (req,res) => {
@@ -187,4 +200,4 @@ const handleAdminLogin = async(req,res)=>{
    }
 }
 
-export { handleGetRequestdPlayers , handleAcceptPlayer ,handleRejectPlayer ,handleAddTournament ,handleAddMeritCertificate ,handleAddParticipationCertificate , handleGetAllTournament,handleEventSort ,handleAddIndividualResult,handleAddTeamResult,handleAddChampionshipResult, handleCreateEntry, handleGetTentry};
+export { handleGetRequestdPlayers , handleAcceptPlayer ,handleRejectPlayer ,handleAddTournament ,handleAddMeritCertificate ,handleAddParticipationCertificate , handleGetAllTournament,handleEventSort ,handleAddIndividualResult,handleAddTeamResult,handleAddChampionshipResult, handleCreateEntry, handleGetTentry,handleGetLatestTournaments};

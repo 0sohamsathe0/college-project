@@ -25,7 +25,9 @@ async function getSinglePlayer(pid) {
 }
 
 async function getPlayersByTournament(tid) {
-  const [rows] = await pool.query(`SELECT * FROM player_details WHERE pid IN (SELECT pid FROM tournament_entry WHERE tid = ${tid});`);
+  const [rows] = await pool.query(
+    `SELECT * FROM player_details WHERE pid IN (SELECT pid FROM tournament_entry WHERE tid = ${tid});`
+  );
   return rows;
 }
 
@@ -106,7 +108,6 @@ async function rejectPlayer(pid) {
   );
 }
 
-
 //Tournament related function
 const addTournament = async (
   title,
@@ -125,80 +126,100 @@ const addTournament = async (
     locationState,
     locationCity,
     tlevel,
-    ageCategory
+    ageCategory,
   ]);
 };
 
 const getAllTournaments = async () => {
-  const [rows] = await pool.query(
-    `select * from tournament_details;`
-  );
+  const [rows] = await pool.query(`select * from tournament_details;`);
   return rows;
-}
+};
 
 const getSpecificTournament = async (tid) => {
   const [rows] = await pool.query(
     `select * from tournament_details where tid = ${tid};`
   );
-  return rows; 
-}
-
-
-
-//tournament entry related functions
-const createEntry = async (pid, tid,tevent) => {
-  const query = `insert into tournament_entry(pid,tid,tevent) values (?,?,?);`;
-  await pool.query(query, [pid, tid,tevent]);
+  return rows;
 };
 
-const getTentryid = async (tid,pid)=>{
+//tournament entry related functions
+const createEntry = async (pid, tid, tevent) => {
+  const query = `insert into tournament_entry(pid,tid,tevent) values (?,?,?);`;
+  await pool.query(query, [pid, tid, tevent]);
+};
+
+const getTentryid = async (tid, pid) => {
   const [rows] = await pool.query(
     `select tentryid from tournament_entry where pid = ${pid} and tid = ${tid} ;`
   );
-  return rows; 
-
-}
+  return rows;
+};
 
 //Add certificate
-const addPartiCerti = async (tid , pid ,url) => {
-  const query = "insert into certificate_of_participation (tid,pid,certficateUrl) values (?,?,?)"
-  await pool.query(query,[tid,pid,url]);
-}
+const addPartiCerti = async (tid, pid, url) => {
+  const query =
+    "insert into certificate_of_participation (tid,pid,certficateUrl) values (?,?,?)";
+  await pool.query(query, [tid, pid, url]);
+};
 
-const addMeritCerti = async (tid , pid ,url) => {
-  const query = "insert into certificate_of_merit (tid,pid,certficateUrl) values (?,?,?)"
-  await pool.query(query,[tid,pid,url]);
-}
-
+const addMeritCerti = async (tid, pid, url) => {
+  const query =
+    "insert into certificate_of_merit (tid,pid,certficateUrl) values (?,?,?)";
+  await pool.query(query, [tid, pid, url]);
+};
 
 //Add Result
-const addIndividualResult = async (tentryid,position) => {
-  const query = "insert into individual_results (tentryid,position) values (?,?)"
-  await pool.query(query,[tentryid,position]);  
-}
+const addIndividualResult = async (tentryid, position) => {
+  const query =
+    "insert into individual_results (tentryid,position) values (?,?)";
+  await pool.query(query, [tentryid, position]);
+};
 
-const addTeamResult = async (tid,event,gender,position) => {
-  const query = "insert into team_results (tid,event,gender,position) values (?,?,?,?)"
-  await pool.query(query,[tid,event,gender,position]);
-}
+const addTeamResult = async (tid, event, gender, position) => {
+  const query =
+    "insert into team_results (tid,event,gender,position) values (?,?,?,?)";
+  await pool.query(query, [tid, event, gender, position]);
+};
 
-const addChampionshipResult = async (tid,gender,position) => {
-  const query = "insert into championship_results (tid,gender,position) values (?,?,?)"
-  await pool.query(query,[tid,gender,position]);
-}
+const addChampionshipResult = async (tid, gender, position) => {
+  const query =
+    "insert into championship_results (tid,gender,position) values (?,?,?)";
+  await pool.query(query, [tid, gender, position]);
+};
 
+const getLatestTournaments = async () => {
+  const currDate = new Date();
+  const tournaments = await getAllTournaments();
+  
+  const latestTournaments = tournaments
+      .filter((tournament) => new Date(tournament.endDate) < currDate)
+      .sort((a, b) => new Date(a.endDate) - new Date(b.endDate))
+      .slice(0, 5);
+  /*
+  const arra = new Array();
+  tournaments.map((tournament) => {
+    if (currDate > tournament.endDate) {
+      arra.push(tournament);
+    }
+  });
 
+  arra.sort((a, b) => a.endDate - b.endDate);
+  const latestTournaments = new Array();
+  for (let i = 0; i < 5; i++) {
+    latestTournaments.push(arra[i]);
+  }*/
+  return latestTournaments;
+};
 
 
 // sort
-
 
 const sortbyevent = async (event) => {
   const [rows] = await pool.query(
     `select * from player_details where eventName = "${event}";`
   );
   return rows;
-}
+};
 
 export {
   pool,
@@ -213,11 +234,13 @@ export {
   addPartiCerti,
   addMeritCerti,
   getAllTournaments,
-  getSpecificTournament,sortbyevent,
+  getSpecificTournament,
+  sortbyevent,
   createEntry,
   addIndividualResult,
   addTeamResult,
   addChampionshipResult,
   getPlayersByTournament,
-  getTentryid
+  getTentryid,
+  getLatestTournaments,
 };
