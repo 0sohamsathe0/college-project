@@ -1,4 +1,5 @@
-import { getPendingPlayers , acceptPlayer , rejectPlayer , addTournament, addPartiCerti , addMeritCerti ,getAllTournaments , sortbyevent , createEntry,addIndividualResult , addTeamResult,addChampionshipResult} from "../database.js";
+import { log } from "console";
+import { getPendingPlayers , acceptPlayer , rejectPlayer , addTournament, addPartiCerti , addMeritCerti ,getAllTournaments , sortbyevent , createEntry,addIndividualResult , addTeamResult,addChampionshipResult , getTentryid} from "../database.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 
@@ -97,6 +98,7 @@ const handleAddTeamResult = async (req,res) => {
    await addTeamResult(tid,event,gender,position);
    res.status(200).json({ message : "Team result added successfully " })
 }
+
 const handleAddChampionshipResult = async (req,res) => {
    const{tid,gender,position} = req.body;
    if(!tid|| !gender || !position){
@@ -107,6 +109,15 @@ const handleAddChampionshipResult = async (req,res) => {
    res.status(200).json({ message : "Championship result added successfully " })
 }
 
+const handleGetTentry = async(req,res)=>{
+   const {tid,pid}=req.params;
+   if(!tid || !pid){
+      return res.status(400).json({message : "all fields are required"})
+   }
+   const tentryid = await getTentryid(tid,pid);
+   console.log(tentryid);
+   res.status(200).json({ 'tentryid':tentryid})
+}
 
 
 //certificates related controllers
@@ -176,4 +187,4 @@ const handleAdminLogin = async(req,res)=>{
    }
 }
 
-export { handleGetRequestdPlayers , handleAcceptPlayer ,handleRejectPlayer ,handleAddTournament ,handleAddMeritCertificate ,handleAddParticipationCertificate , handleGetAllTournament,handleEventSort ,handleAddIndividualResult,handleAddTeamResult,handleAddChampionshipResult, handleCreateEntry};
+export { handleGetRequestdPlayers , handleAcceptPlayer ,handleRejectPlayer ,handleAddTournament ,handleAddMeritCertificate ,handleAddParticipationCertificate , handleGetAllTournament,handleEventSort ,handleAddIndividualResult,handleAddTeamResult,handleAddChampionshipResult, handleCreateEntry, handleGetTentry};

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,useState } from 'react'
 import { NavLink, Routes, Route, Link } from 'react-router-dom'
 import '../App.css'
 import Home from "./Home.jsx"
@@ -10,14 +10,29 @@ import PlayerProfile from './PlayerProfile.jsx'
 import AdminProfile from './AdminProfile.jsx'
 import Aboutus from './Aboutus.jsx'
 import Contact from './Contact.jsx'
-
+import Cookies from 'js-cookie'
 
 
 const Navbar = () => {
 
- 
+    const[loginState,setLoginState] = useState(false);
+    const checkLoginState = () =>{
+        console.log(Cookies.get('loginState'));
+        
 
+        if(Cookies.get('loginState')){
+            setLoginState(true);
+        }
+        else{
+            setLoginState(false);
+        }
+    }
 
+    useEffect(()=>{
+        checkLoginState()
+    },[])
+    
+    
 
     return (
         <>
@@ -30,8 +45,14 @@ const Navbar = () => {
               
                 <div className='w-auto links_container hidden md:flex justify-items-end items-center space-x-20 px-3  bg-transparent text-[.7rem] lg:text-lg xl:text-xl font-bold'>
                    
+                   {
+                    loginState ? <></>
+                    :
+                    <>
                      <NavLink to="playerLogin" className="border border-white px-5 py-3 rounded-xl"> Login</NavLink>
                      <NavLink to="playerRegistor" className="border border-white px-5 py-3 rounded-xl"> Sign Up</NavLink>
+                    </>
+                   }
                      
                     </div>
 

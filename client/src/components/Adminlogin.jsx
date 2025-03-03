@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import AdminBg from "../assets/AdminBg.png";
 import Logo from "../assets/Logo.png";
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie'
 
 const Adminlogin = () => {
     const [adminId, setAdminId] = useState('');
@@ -29,7 +30,7 @@ const Adminlogin = () => {
         if (!validateForm()) return;
 
         if (adminId === "admin" && password === "admin@123") {
-            document.cookie = 'loginState=adminLoggedIn';
+            Cookies.set('loginState','adminLoggedIn');
             alert("Login Successful");
             navigate("/adminProfile");
         } else {

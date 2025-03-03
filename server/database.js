@@ -151,6 +151,13 @@ const createEntry = async (pid, tid,tevent) => {
   await pool.query(query, [pid, tid,tevent]);
 };
 
+const getTentryid = async (tid,pid)=>{
+  const [rows] = await pool.query(
+    `select tentryid from tournament_entry where pid = ${pid} and tid = ${tid} ;`
+  );
+  return rows; 
+
+}
 
 //Add certificate
 const addPartiCerti = async (tid , pid ,url) => {
@@ -211,5 +218,6 @@ export {
   addIndividualResult,
   addTeamResult,
   addChampionshipResult,
-  getPlayersByTournament
+  getPlayersByTournament,
+  getTentryid
 };
