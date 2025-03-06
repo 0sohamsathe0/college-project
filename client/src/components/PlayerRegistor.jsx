@@ -103,7 +103,7 @@ const PlayerRegister = () => {
                 value={formData.fullName}
                 onChange={handleChange}
                 required
-                className="w-full border rounded-lg px-3 py-2"
+                className="w-full border border-black rounded-lg px-3 py-2"
               />
             </div>
             <div>
@@ -113,7 +113,7 @@ const PlayerRegister = () => {
                 value={formData.gender}
                 onChange={handleChange}
                 required
-                className="w-full border rounded-lg px-3 py-2"
+                className="w-full border border-black rounded-lg px-3 py-2"
               >
                 <option value="">Select Gender</option>
                 <option value="Male">Male</option>
@@ -128,7 +128,7 @@ const PlayerRegister = () => {
                 value={formData.dob}
                 onChange={handleChange}
                 required
-                className="w-full border rounded-lg px-3 py-2"
+                className="w-full border border-black rounded-lg px-3 py-2"
               />
             </div>
             <div>
@@ -138,7 +138,7 @@ const PlayerRegister = () => {
                 value={formData.eventName}
                 onChange={handleChange}
                 required
-                className="w-full border rounded-lg px-3 py-2"
+                className="w-full border border-black rounded-lg px-3 py-2"
               >
                 <option value="">Select Event</option>
                 <option value="Epee">Epee</option>
@@ -164,7 +164,7 @@ const PlayerRegister = () => {
                 required
                 maxLength="12"
                 pattern="\d{12}"
-                className="w-full border rounded-lg px-3 py-2"
+                className="w-full border border-black rounded-lg px-3 py-2"
               />
             </div>
             <div>
@@ -175,7 +175,7 @@ const PlayerRegister = () => {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="w-full border rounded-lg px-3 py-2"
+                className="w-full border border-black rounded-lg px-3 py-2"
               />
             </div>
             <div>
@@ -188,7 +188,7 @@ const PlayerRegister = () => {
                 required
                 maxLength="10"
                 pattern="\d{10}"
-                className="w-full border rounded-lg px-3 py-2"
+                className="w-full border border-black rounded-lg px-3 py-2"
               />
             </div>
           </div>
@@ -207,7 +207,7 @@ const PlayerRegister = () => {
                 value={formData.addressLine1}
                 onChange={handleChange}
                 required
-                className="w-full border rounded-lg px-3 py-2"
+                className="w-full border border-black rounded-lg px-3 py-2"
               />
             </div>
             <div>
@@ -218,7 +218,7 @@ const PlayerRegister = () => {
                 value={formData.addressLine2}
                 onChange={handleChange}
                 required
-                className="w-full border rounded-lg px-3 py-2"
+                className="w-full border border-black rounded-lg px-3 py-2"
               />
             </div>
             <div>
@@ -231,7 +231,7 @@ const PlayerRegister = () => {
                 required
                 maxLength="6"
                 pattern="\d{6}"
-                className="w-full border rounded-lg px-3 py-2"
+                className="w-full border border-black rounded-lg px-3 py-2"
               />
             </div>
             <div>
@@ -242,7 +242,7 @@ const PlayerRegister = () => {
                 value={formData.schoolCollegeName}
                 onChange={handleChange}
                 required
-                className="w-full border rounded-lg px-3 py-2"
+                className="w-full border border-black rounded-lg px-3 py-2"
               />
             </div>
           </div>

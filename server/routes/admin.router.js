@@ -1,5 +1,5 @@
 import express from 'express';
-import { handleGetRequestdPlayers , handleAcceptPlayer ,handleRejectPlayer ,handleAddTournament ,handleAddMeritCertificate ,handleAddParticipationCertificate ,handleAddIndividualResult,handleAddTeamResult,handleGetAllTournament,handleAddChampionshipResult,handleEventSort,handleCreateEntry,handleGetTentry,handleGetLatestTournaments } from "../controllers/admin.controller.js"
+import { handleGetRequestdPlayers , handleAcceptPlayer ,handleRejectPlayer ,handleAddTournament ,handleAddMeritCertificate ,handleAddParticipationCertificate ,handleAddIndividualResult,handleAddTeamResult,handleGetAllTournament,handleAddChampionshipResult,handleEventSort,handleCreateEntry,handleGetTentry,handleGetLatestTournaments,handleGetChampionshipResult , handleGetIndividual,handleGetTeamResult} from "../controllers/admin.controller.js"
 import { upload } from "../middlewares/multer.middelware.js";
 
 const router = express.Router()
@@ -32,7 +32,11 @@ router.post("/add-result/team" , handleAddTeamResult)
 router.post("/add-result/championship" , handleAddChampionshipResult)
 router.get("/getTentry/:tid/:pid" ,handleGetTentry)
 router.get("/latest-tournaments" , handleGetLatestTournaments)
+router.get("/getChampionshipResult", handleGetChampionshipResult);
+router.get("/getIndividualResult/:tid", handleGetIndividual);
+router.get("/getTeamResult/:tid" , handleGetTeamResult);
 
+// entry related routes
 router.post("/createEntry" ,handleCreateEntry);
 
 export default router;

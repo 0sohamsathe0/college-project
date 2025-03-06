@@ -4,6 +4,7 @@ import Logo from "../assets/Logo.png";
 import "../App.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Cookies from "js-cookie"
 
 const PlayerLogin = () => {
   const navigate = useNavigate();
@@ -55,7 +56,8 @@ const PlayerLogin = () => {
       );
 
       console.log(response.data.token);
-      document.cookie = `jwtToken=${response.data.token}`;
+      Cookies.set("jwtToken" , response.data.token) ;
+      console.log(Cookies.get('jwtToken'))
       navigate("/playerprofile");
     } catch (error) {
       console.error("Error fetching data:", error);

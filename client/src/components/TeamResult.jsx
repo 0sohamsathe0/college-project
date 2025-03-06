@@ -55,27 +55,27 @@ const TeamResult = () => {
 
   return (
     <div>
-      <table class="relative overflow-x-auto w-full text-sm text-left rtl:text-right bg-yellow-600">
-                <thead class="text-xs text-gray-900 uppercase">
+      <table className="relative overflow-x-auto w-full text-sm text-left rtl:text-right bg-yellow-600">
+                <thead className="text-xs text-gray-900 uppercase">
                     <tr>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col" className="px-6 py-3">
                             Tournament Name
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col" className="px-6 py-3">
                            Event
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col" className="px-6 py-3">
                             Gender
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col" className="px-6 py-3">
                             Position
                         </th>
 
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="bg-white">
-                        <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap">
+                    <tr className="bg-white">
+                        <th scope="row" className="px-6 py-4 font-medium text-black whitespace-nowrap">
                         <select value={singleTournament} onChange={selectSingletournament}>
                             <option value="Select Tournament">Select Tournament</option>
                          {
@@ -85,20 +85,20 @@ const TeamResult = () => {
                          }
                         </select>
                         </th>
-                        <td class="px-6 py-4">
+                        <td className="px-6 py-4">
                         <select onChange={selectEvent} value={event}>
                                 <option value="Sabre">Sabre</option>
                                 <option value="Epee">Epee</option>
                                 <option value="Foil">Foil</option>
                             </select>
                         </td>
-                        <td class="px-6 py-4">
+                        <td className="px-6 py-4">
                         <select onChange={selectGender} value={gender}>
                                 <option value="M">Male</option>
                                 <option value="F">Female</option>
                             </select>
                         </td>
-                        <td class="px-6 py-4">
+                        <td className="px-6 py-4">
                         <select onChange={selectPosition} value={position}>
                                 <option value="First">1st</option>
                                 <option value="Second">2nd</option>

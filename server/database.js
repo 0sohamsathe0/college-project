@@ -168,7 +168,7 @@ const addMeritCerti = async (tid, pid, url) => {
   await pool.query(query, [tid, pid, url]);
 };
 
-//Add Result
+//Result related function
 const addIndividualResult = async (tentryid, position) => {
   const query =
     "insert into individual_results (tentryid,position) values (?,?)";
@@ -211,6 +211,39 @@ const getLatestTournaments = async () => {
   return latestTournaments;
 };
 
+const getChampionshipResult= async()=>{
+  const [rows] = await pool.query(`SELECT 
+    tournament_details.title, 
+    tournament_details.tlevel, 
+    tournament_details.ageCategory, 
+    championship_results.gender, 
+    championship_results.position 
+FROM tournament_details
+JOIN championship_results ON championship_results.tid = tournament_details.tid
+ORDER BY 
+FIELD(tournament_details.tlevel, 'International', 'National', 'State', 'District'),
+FIELD(championship_results.position, 'First', 'Second', 'Third');
+;
+`);
+  return rows;
+}
+const getTeamResult= async(tid)=>{
+  const [rows] = await pool.query(`select event,gender,position from team_results WHERE tid = ${tid};`);
+  return rows;
+}
+const getIndivisualResult= async(tid)=>{
+ const [rows] = await pool.query(`
+  SELECT 
+    player_details.fullName,
+    player_details.eventName,  -- Added missing comma
+    individual_results.position
+FROM tournament_entry
+JOIN player_details ON player_details.pid = tournament_entry.pid
+JOIN individual_results ON individual_results.tentryid = tournament_entry.tentryid
+WHERE tournament_entry.tid = ${tid};
+  `);
+  return rows;
+}
 
 // sort
 
@@ -243,4 +276,7 @@ export {
   getPlayersByTournament,
   getTentryid,
   getLatestTournaments,
+  getChampionshipResult,
+  getIndivisualResult,
+  getTeamResult
 };

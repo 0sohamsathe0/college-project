@@ -224,7 +224,7 @@ const CreateEntry = () => {
   
 
   return (
-    <div className="w-full min-h-screen bg-blue-600 p-5">
+    <div className="w-full min-h-screen shadow-2xl p-5">
       <div className="bg-white rounded-lg w-full mt-20 p-5">
         <h1 className="text-center text-2xl font-bold text-black p-5">
           Create Tournament Entry

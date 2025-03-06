@@ -20,7 +20,7 @@ const Navbar = () => {
         console.log(Cookies.get('loginState'));
         
 
-        if(Cookies.get('loginState')){
+        if(Cookies.get('loginState') || Cookies.get('jwtToken')){
             setLoginState(true);
         }
         else{
@@ -39,7 +39,7 @@ const Navbar = () => {
 
             <nav className='flex justify-between items-center pr-14 gap-5 w-full bg-blue-700 text-white'>
 
-                    <Link to="/" className='logo w-1/5 flex items-center text-md font-bold'>
+                    <Link to="/" className='logo flex items-center text-md font-bold'>
                         <img src={Logo} alt="logo" width={80} />All Star Fencing Club
                     </Link>
               

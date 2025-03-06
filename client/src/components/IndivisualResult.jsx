@@ -54,6 +54,8 @@ const IndivisualResult = () => {
   }, []);
 
   const addIndivisualResult = async() => {
+    console.log(singleTournament,singlePlayer);
+    
     const result = await axios.get(`http://localhost:3500/admin/getTentry/${singleTournament}/${singlePlayer}`)
     console.log(result.data.tentryid[0].tentryid)
 
@@ -108,6 +110,7 @@ const IndivisualResult = () => {
             </td>
              <td className="px-6 py-4">
                             <select value={singlePlayer} onChange={selectPlayer}>
+                            <option>select player</option>
                                 {
                                   players.length>0 ?
                                    players.map((player)=>(
