@@ -187,6 +187,17 @@ const addChampionshipResult = async (tid, gender, position) => {
   await pool.query(query, [tid, gender, position]);
 };
 
+const getUpcomingTournamentsForPlayer = async (pid) => {
+  const[rows] = await pool.query(`select * from tournament_details where tid in (select tid from tournament_entry where pid = ${pid} );
+`)
+ const tournament = rows;
+ const currDate = new Date();
+
+const upcomingTournaments = tournament.filter((tournament) => new Date(tournament.endDate) > currDate)
+      
+return upcomingTournaments;
+}
+
 const getLatestTournaments = async () => {
   const currDate = new Date();
   const tournaments = await getAllTournaments();
@@ -245,6 +256,16 @@ WHERE tournament_entry.tid = ${tid};
   return rows;
 }
 
+const getIndividualResultForPlayer = async (pid)=>{
+  const [rows] = await pool.query(`SELECT 
+    tournament_details.title, 
+    individual_results.position
+FROM tournament_entry
+JOIN tournament_details ON tournament_details.tid = tournament_entry.tid
+JOIN individual_results ON individual_results.tentryid = tournament_entry.tentryid
+WHERE tournament_entry.pid = ${pid};`)
+return rows;
+}
 // sort
 
 const sortbyevent = async (event) => {
@@ -278,5 +299,5 @@ export {
   getLatestTournaments,
   getChampionshipResult,
   getIndivisualResult,
-  getTeamResult
+  getTeamResult,getUpcomingTournamentsForPlayer,getIndividualResultForPlayer
 };

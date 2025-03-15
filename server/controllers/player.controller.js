@@ -1,4 +1,4 @@
-import{ getPlayers, getSinglePlayer, insertplayer ,pool ,getSpecificTournament , getPlayersByTournament} from"../database.js"
+import{ getPlayers, getSinglePlayer, insertplayer ,pool ,getSpecificTournament , getPlayersByTournament,getUpcomingTournamentsForPlayer, getIndividualResultForPlayer} from"../database.js"
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
@@ -38,6 +38,12 @@ async function getPlayerDetail(req , res) {
     return res.status(400).json({ message: "player id is required" });
   }
   const player = await getSinglePlayer(pid);
+  const upcomingTournaments = await getUpcomingTournamentsForPlayer(pid);
+  console.log(upcomingTournaments);
+  const individual_results = await getIndividualResultForPlayer(pid);
+  console.log(individual_results);
+  
+  
   res.send(player);
 }
 async function getPlayersInTournament(req,res) {
