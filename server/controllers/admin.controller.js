@@ -1,5 +1,5 @@
-import { log } from "console";
-import { getPendingPlayers , acceptPlayer , rejectPlayer , addTournament, addPartiCerti , addMeritCerti ,getAllTournaments , sortbyevent , createEntry,addIndividualResult , addTeamResult,addChampionshipResult , getTentryid , getLatestTournaments,getChampionshipResult,getIndivisualResult,getTeamResult } from "../database.js";
+import { getPendingPlayers , acceptPlayer , rejectPlayer , addTournament, addPartiCerti , addMeritCerti ,getAllTournaments , sortbyevent , createEntry,addIndividualResult , addTeamResult,addChampionshipResult , getTentryid , getLatestTournaments,getChampionshipResult,getIndivisualResult,getTeamResult,getSinglePlayer } from "../database.js";
+import{sendAcceptedMail,sendRejectionMail} from "../utils/nodemailer.js"
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 
@@ -25,10 +25,16 @@ const handleGetRequestdPlayers = async (req, res) => {
 
 //player realted controllers
 const handleAcceptPlayer = async(req,res)=>{
-   const {pid} = req.params
-   console.log(pid);
-   
+   const {pid} = req.params   
    try {
+      const player = await getSinglePlayer(pid);
+      const email = player[0].email;
+      const indexOfSpace = player[0].fullName.indexOf(' ')
+      const pname = player[0].fullName.slice(0, indexOfSpace)
+      console.log(pname,email);
+      
+      sendAcceptedMail(pname,email)
+
       await acceptPlayer(pid);
    } catch (error) {
       console.log(error);
@@ -39,6 +45,14 @@ const handleAcceptPlayer = async(req,res)=>{
 const handleRejectPlayer = async(req,res)=>{
    const pid = req.params.pid;
    try {
+      const player = await getSinglePlayer(pid);
+      const email = player[0].email;
+      const indexOfSpace = player[0].fullName.indexOf(' ')
+      const pname = player[0].fullName.slice(0, indexOfSpace)
+      console.log(pname,email);
+      
+      sendRejectionMail(pname,email)
+
       await rejectPlayer(pid);
    } catch (error) {
       console.log(error);
