@@ -4,61 +4,53 @@ import React, { useEffect, useState } from "react";
 const DisplayLatestTournaments = () => {
   const [latest, setLatest] = useState([]);
 
-  const latestTournaments = async () => {
+  useEffect(() => {
+    fetchLatestTournaments();
+  }, []);
+
+  const fetchLatestTournaments = async () => {
     try {
       const res = await axios.get(
         "http://localhost:3500/admin/latest-tournaments"
       );
-      let data = await res.data["filtered"];
-      setLatest(data);
+      setLatest(res.data.filtered);
     } catch (error) {
-      console.log("error fetching data");
+      console.error("Error fetching data:", error);
     }
   };
 
-  useEffect(() => {
-    latestTournaments();
-  }, []);
-
   return (
-    <div className="p-10 overflow-x-scroll">
-        <h1 className="text-center text-[2rem] m-2 text-[#0e0e51] font-bold">Our Latest Tournaments Played</h1>
-      <table className="overflow-x-scroll w-full text-sm text-left rtl:text-right bg-yellow-600">
-        <thead className="text-xs text-gray-900 uppercase">
-          <tr>
-            <th scope="col" className="px-6 py-3">
-              Tournament Name
-            </th>
-            
-            <th scope="col" className="px-6 py-3">
-              Location
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Level
-            </th>
-            <th scope="col" className="px-6 py-3">
-              Age Category
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            latest.length > 0 &&
-            latest.map((singleLatestTournament,index)=>(
+    <div className="max-w-5xl mx-auto p-6 bg-gray-100 rounded-lg shadow-lg">
+      <h1 className="text-center text-2xl font-bold text-blue-900 mb-6">
+        Latest Tournaments Played
+      </h1>
 
-                <tr className="bg-white" key={index+1}>
-              <td
-                scope="row"
-                className="px-6 py-4 font-medium text-black whitespace-nowrap"
-                ><h1>{singleLatestTournament.title}</h1></td>
-              <td className="px-6 py-4">{singleLatestTournament.locationCity}</td>
-              <td className="px-6 py-4">{singleLatestTournament.tlevel}</td>
-              <td className="px-6 py-4">{singleLatestTournament.ageCategory}</td>
-            </tr>
-            ))
-          }
-        </tbody>
-      </table>
+      {latest.length === 0 ? (
+        <p className="text-center text-gray-500">No tournaments available.</p>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {latest.map((tournament, index) => (
+            <div
+              key={index}
+              className="bg-white rounded-lg shadow-md p-4 flex flex-col hover:shadow-lg transition"
+            >
+              <h2 className="text-lg font-semibold text-gray-800">
+                {tournament.title}
+              </h2>
+              <p className="text-gray-600">
+                📍 Location: {tournament.locationCity}
+              </p>
+              <p className="text-gray-600">📈 Level: {tournament.tlevel}</p>
+              <p className="text-gray-600">
+                🎯 Age Category:{" "}
+                {tournament.ageCategory === 65
+                  ? "OPEN"
+                  : `U${tournament.ageCategory}`}
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
