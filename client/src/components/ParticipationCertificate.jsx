@@ -36,25 +36,50 @@ const ParticipationCertificate = () => {
     }
   };
 
-  const fetchPlayers = async () => {
+  const fetchTournaments = async () => {
     try {
-      let response = await axios.get("http://localhost:3500/players/all-players");
-      setPlayers(response.data);
-      response = await axios.get("http://localhost:3500/admin/getAllTournaments");
+     let response = await axios.get("http://localhost:3500/admin/getAllTournaments");
       setTournaments(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
 
+  const fetchPlayers = async(tid)=>{
+    const res = await axios.get(`http://localhost:3500/players/all-players/${Number(tid)}`);
+      console.log(res.data);
+      
+      setPlayers(res.data); 
+  }
+
   useEffect(() => {
-    fetchPlayers();
+    fetchTournaments();
   }, []);
 
   return (
     <div className="w-full max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-6 mt-6">
       <h1 className="text-center font-bold text-2xl text-gray-800 mb-6">Add Participation Certificate</h1>
       <form onSubmit={addMerit} className="space-y-5">
+
+      <div className="flex flex-col">
+          <label className="font-semibold text-gray-700">Tournament Title</label>
+          <select
+            className="p-2 border rounded-md focus:ring focus:ring-blue-300"
+            name="tid"
+            onChange={(e)=>{
+              handleDataChange(e)
+              fetchPlayers(e.target.value)
+            }
+            }
+          >
+            <option value="">Select Tournament</option>
+            {tournaments.map((tournament) => (
+              <option key={tournament.tid} value={tournament.tid}>{tournament.title}</option>
+            ))}
+          </select>
+        </div>
+
+
         <div className="flex flex-col">
           <label className="font-semibold text-gray-700">Player Name</label>
           <select
@@ -69,19 +94,7 @@ const ParticipationCertificate = () => {
           </select>
         </div>
         
-        <div className="flex flex-col">
-          <label className="font-semibold text-gray-700">Tournament Title</label>
-          <select
-            className="p-2 border rounded-md focus:ring focus:ring-blue-300"
-            name="tid"
-            onChange={handleDataChange}
-          >
-            <option value="">Select Tournament</option>
-            {tournaments.map((tournament) => (
-              <option key={tournament.tid} value={tournament.tid}>{tournament.title}</option>
-            ))}
-          </select>
-        </div>
+        
         
         <div className="flex flex-col">
           <label className="font-semibold text-gray-700">Upload Certificate</label>

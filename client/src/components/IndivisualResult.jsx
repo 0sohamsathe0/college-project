@@ -26,7 +26,7 @@ const IndivisualResult = () => {
     try {
 
       const res = await axios.get(`http://localhost:3500/players/all-players/${Number(tourId)}`);
-      console.log(res.data);
+      
       setPlayers(res.data); 
     } catch (error) {
       console.error("Error fetching players:", error);

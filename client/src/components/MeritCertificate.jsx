@@ -40,49 +40,60 @@ const MeritCertificate = () => {
     }
   };
 
-  const fetchPlayers = async () => {
+  const fetchTournaments = async () => {
     try {
-      let response = await axios.get("http://localhost:3500/players/all-players");
-      setPlayers(response.data);
-      response = await axios.get("http://localhost:3500/admin/getAllTournaments");
+    
+      let response = await axios.get("http://localhost:3500/admin/getAllTournaments");
       setTournament(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
 
+  const fetchPlayers = async(tid)=>{
+    let response = await axios.get(`http://localhost:3500/players/all-players/${Number(tid)}`)
+    setPlayers(response.data)
+  }
+
   useEffect(() => {
-    fetchPlayers();
+    fetchTournaments();
   }, []);
 
   return (
     <div className="w-full max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-6 mt-6">
       <h1 className="text-center font-bold text-2xl text-gray-800 mb-6">Add Merit Certificate</h1>
       <form onSubmit={addMerit} className="space-y-5">
-        <div className="flex flex-col">
-          <label className="font-semibold text-gray-700">Player Name</label>
-          <select
-            className="p-2 border rounded-md focus:ring focus:ring-blue-300"
-            name="pid"
-            onChange={handleDataChange}
-          >
-            <option value="">Select Player</option>
-            {players.map((player) => (
-              <option key={player.pid} value={player.pid}>{player.fullName}</option>
-            ))}
-          </select>
-        </div>
+        
         
         <div className="flex flex-col">
           <label className="font-semibold text-gray-700">Tournament Title</label>
           <select
             className="p-2 border rounded-md focus:ring focus:ring-blue-300"
             name="tid"
-            onChange={handleDataChange}
+            onChange={ (e)=>{
+              handleDataChange(e);
+              fetchPlayers(e.target.value)}
+            }
           >
             <option value="">Select Tournament</option>
             {tournament.map((t) => (
               <option key={t.tid} value={t.tid}>{t.title}</option>
+            ))}
+          </select>
+        </div>
+
+        <div className="flex flex-col">
+          <label className="font-semibold text-gray-700">Player Name</label>
+          <select
+            className="p-2 border rounded-md focus:ring focus:ring-blue-300"
+            name="pid"
+            onChange={(e)=>{
+              handleDataChange(e)
+            }}
+          >
+            <option value="">Select Player</option>
+            {players.map((player) => (
+              <option key={player.pid} value={player.pid}>{player.fullName}</option>
             ))}
           </select>
         </div>

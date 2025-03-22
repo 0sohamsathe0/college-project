@@ -34,6 +34,14 @@ const CreateEntry = () => {
     }
   };
 
+  const getTitle = ()=>{
+    for(let i=0 ; i<tournamentList.length;i++ ){
+      if(tournamentList[i].tid == selectTournament)
+      {   return tournamentList[i].title }
+    }
+    
+  }
+
   useEffect(() => {
     if (!selectTournament || playerList.length === 0) return;
     const selectedTournamentObj = tournamentList.find(
@@ -108,6 +116,7 @@ const CreateEntry = () => {
 
   const exportPlayers = async (e) => {
     e.preventDefault();
+    getTitle()
     const dataToExport = {
       tournamentId: selectTournament,
       playerGender: gender,
@@ -129,7 +138,7 @@ const CreateEntry = () => {
       // Title Row
       worksheet.mergeCells("A1:E1");
       const titleRow = worksheet.getRow(1);
-      titleRow.getCell(1).value = "34th senior State fencing championship";
+      titleRow.getCell(1).value = getTitle();
       titleRow.getCell(1).alignment = { horizontal: "center" };
       titleRow.font = { bold: true, size: 16 };
       

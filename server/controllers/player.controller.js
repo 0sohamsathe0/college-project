@@ -154,8 +154,12 @@ async function handleVerifyPlayer(req,res) {
 
     const player = await getSinglePlayer(decoded.id);
     console.log(player);
-    
-    res.status(200).json({message:"Player verified successfully" ,player})
+    console.log(player[0].pid);
+    const upcomingTournaments = await getUpcomingTournamentsForPlayer(player[0].pid);
+  console.log(upcomingTournaments);
+  const individual_results = await getIndividualResultForPlayer(player[0].pid);
+  console.log(individual_results);
+    res.status(200).json({message:"Player verified successfully" ,player,upcomingTournaments})
   })
 }
 
